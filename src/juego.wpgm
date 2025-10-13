@@ -1,6 +1,6 @@
-import tp.juegoIsaac
+import tp.configJuego
 
 program juego {
-    juegoIsaac.jugar()
+    configJuego.jugar()
 }
 
