@@ -13,25 +13,25 @@ object juegoIsaac{
             pj.derecha()
         }
         keyboard.d().onPressDo {
-            pj.derecha()
+            pj.atacar_derecha()
         }
         keyboard.left().onPressDo {
             pj.izquierda()
         }
         keyboard.a().onPressDo {
-            pj.izquierda()
+            pj.atacar_izquierda()
         }
         keyboard.up().onPressDo {
             pj.arriba()
         }
         keyboard.w().onPressDo {
-            pj.arriba()
+            pj.atacar_arriba()
         }
         keyboard.down().onPressDo {
             pj.abajo()
         }
         keyboard.s().onPressDo {
-            pj.abajo()
+            pj.atacar_abajo()
         }
         keyboard.v().onPressDo {
             const ogro = new Ogro()
@@ -44,9 +44,6 @@ object juegoIsaac{
         game.onCollideDo(pj, { otro =>
             otro.chocaste_con_pj()
         })
-        keyboard.space().onPressDo {
-            pj.atacar()
-        }
         
 
     }
@@ -67,9 +64,9 @@ object juegoIsaac{
 object pj{
     var property position = game.center()
     var property vida = 3
-    var property puntuacion = 2
+    var property puntuacion = 0
     var property danio = 1
-    var property nivel = 2
+    var property nivel = 0
     method image() = "manzana.png"
 
     method arriba(){
@@ -90,6 +87,27 @@ object pj{
     method centrate(){
         position = game.center()
     }
+    method atacar_arriba(){
+        const posiciones_a_atacar = self.posiciones_alrededor()
+
+        game.getObjectsIn(posiciones_a_atacar.get(0)).forEach({ogro => ogro.fuiste_atacado(self)})
+    }
+    method atacar_abajo(){
+        const posiciones_a_atacar = self.posiciones_alrededor()
+
+        game.getObjectsIn(posiciones_a_atacar.get(1)).forEach({ogro => ogro.fuiste_atacado(self)})
+    }
+    method atacar_izquierda(){
+        const posiciones_a_atacar = self.posiciones_alrededor()
+
+        game.getObjectsIn(posiciones_a_atacar.get(2)).forEach({ogro => ogro.fuiste_atacado(self)})
+    }
+    method atacar_derecha(){
+        const posiciones_a_atacar = self.posiciones_alrededor()
+
+        game.getObjectsIn(posiciones_a_atacar.get(3)).forEach({ogro => ogro.fuiste_atacado(self)})
+    }
+    
 
     method sumarPuntuacion(puntosASumar){
         puntuacion += puntosASumar
@@ -107,11 +125,7 @@ object pj{
         return [position.up(1), position.down(1), position.left(1), position.right(1)]
     }
 
-    method atacar(){
-        const posiciones_a_atacar = self.posiciones_alrededor()
-
-        game.getObjectsIn(posiciones_a_atacar.get(0)).forEach({ogro => ogro.fuiste_atacado(self)})
-    }
+    
 
     method mataste_un_ogro(){
         self.sumarPuntuacion(1)
