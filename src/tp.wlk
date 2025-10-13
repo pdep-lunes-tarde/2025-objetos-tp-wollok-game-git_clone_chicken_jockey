@@ -67,7 +67,7 @@ object pj{
     var property puntuacion = 0
     var property danio = 1
     var property nivel = 0
-    method image() = "manzana.png"
+    method image() = "soldado.png"
 
     method arriba(){
         position = position.up(1)
@@ -152,7 +152,7 @@ class Ogro{
     var property ultimaPosicion = game.center()
     var property danio = 1
     var property texto_vida = new Vida_enemigos(enemigo = self) 
-    method image() = "ogro.png"
+    method image() = "Orco.png"
 
     method derecha(){
         ultimaPosicion = position

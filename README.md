@@ -46,9 +46,8 @@ En este juego, uno es un personajito que se encuentra en una mazmorra donde tien
 Sin embargo, no está solo, y cada tanto aparecen un enemigos que vienen a eliminarlo. Consigue la mayor cantidad oro posible antes de que los mosntruos te atrapen!
 
 Controles del aventurero:
-  WASD: moverse de manera convencional.
-  Q: Atacar con la espada
-  E: Interactuar
-Spawn y movimiento de los enemigos/items:
+  Flechas: moverse de manera convencional.
+  WASD: para atacar en multiples direcciones
+  Spawn y movimiento de los enemigos/items:
   Lo ideal sería que por cada interacción que el usuario haga, los enemigos avancen. Cada cierta cantidad de interacciones, aparece un enemigo.
   Lo mismo con los tesoros, cada 5 pasos, que aparezca una moneda o un tesoro más grande.
