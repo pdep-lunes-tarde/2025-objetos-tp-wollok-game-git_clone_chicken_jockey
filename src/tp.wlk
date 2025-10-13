@@ -37,14 +37,16 @@ object juegoIsaac{
             const ogro = new Ogro()
             ogro.movete()
             game.addVisual(ogro)
-            keyboard.any().onPressDo {
-                ogro.moverHacia(pj)
-            }
-    
+            game.addVisual(ogro.texto_vida())
+            game.onTick(2000, "movimiento_ogro", { ogro.moverHacia(pj)})
         }
+        
         game.onCollideDo(pj, { otro =>
-            otro.chocasteConPj(pj)
+            otro.chocaste_con_pj()
         })
+        keyboard.space().onPressDo {
+            pj.atacar()
+        }
         
 
     }
@@ -54,7 +56,10 @@ object juegoIsaac{
         game.addVisual(pj)
         game.addVisual(puntuacion)
         game.addVisual(nivel)
-        
+        game.addVisual(vida)
+    }
+    method termino_el_juego(){
+        game.clear()
     }
 
 }
@@ -62,10 +67,9 @@ object juegoIsaac{
 object pj{
     var property position = game.center()
     var property vida = 3
-    var property puntuacion = 0
+    var property puntuacion = 2
     var property danio = 1
-    var property nivel = 1
-    var property knockback = 3
+    var property nivel = 2
     method image() = "manzana.png"
 
     method arriba(){
@@ -98,6 +102,33 @@ object pj{
             puntuacion = 0
         }
     }
+
+    method posiciones_alrededor(){
+        return [position.up(1), position.down(1), position.left(1), position.right(1)]
+    }
+
+    method atacar(){
+        const posiciones_a_atacar = self.posiciones_alrededor()
+
+        game.getObjectsIn(posiciones_a_atacar.get(0)).forEach({ogro => ogro.fuiste_atacado(self)})
+    }
+
+    method mataste_un_ogro(){
+        self.sumarPuntuacion(1)
+        self.subirNivel()
+        if(nivel >= 3){
+            juegoIsaac.termino_el_juego()
+            game.addVisual(you_win)
+        }
+    }
+
+    method fuiste_atacado(enemigo){
+        vida -= enemigo.danio()
+        if(vida <= 0){
+            juegoIsaac.termino_el_juego()
+            game.addVisual(game_over)
+        }
+    }
     
 }
 
@@ -105,6 +136,8 @@ class Ogro{
     var property position = game.center()
     var property vida = 2
     var property ultimaPosicion = game.center()
+    var property danio = 1
+    var property texto_vida = new Vida_enemigos(enemigo = self) 
     method image() = "ogro.png"
 
     method derecha(){
@@ -137,15 +170,10 @@ class Ogro{
         position = game.center()
     }
 
-    method chocasteConPj(pj){
-        if(vida <= 0){
-            game.removeVisual(self)
-            pj.sumarPuntuacion(1)
-            pj.subirNivel()
-        } else {
-            vida -= pj.danio()
-            pj.knockback(3)
-        }
+    method chocaste_con_pj(){
+        pj.fuiste_atacado(self)
+        position = ultimaPosicion
+        texto_vida.mover_con_enemigo(position.up(1))
 
     }
 
@@ -159,22 +187,19 @@ class Ogro{
         } else if (self.position().y() < target.position().y()){
             self.arriba()
         } 
+        texto_vida.mover_con_enemigo(position.up(1))
     }
 
-    method knockback(distancia){
-        const x = position.x() - ultimaPosicion.x()
-        const y = position.y() - ultimaPosicion.y()
-        if (x > 0) {
-            position = position.left(distancia)
-        } else if (x < 0) {
-            position = position.right(distancia)
-        } else if (y > 0) {
-            position = position.down(distancia)
-        } else if (y < 0) {
-            position = position.up(distancia)
-        }
-    }
+    method fuiste_atacado(enemigo){
+        vida -= enemigo.danio()
+        if(vida <= 0){
+            game.removeVisual(self)
+            game.removeVisual(texto_vida)
+            pj.mataste_un_ogro()
+        } else position = ultimaPosicion
+                texto_vida.mover_con_enemigo(position.up(1))
 
+    }
 }
 
 object puntuacion{
@@ -184,9 +209,6 @@ object puntuacion{
 
     method textColor() = paleta.negro()
 
-    method chocasteConPj(){
-
-    }
 }
 
 object paleta{
@@ -194,14 +216,50 @@ object paleta{
 }
 
 object nivel {
-    method position() = new Position(x=0.5, y=18)
+    method position() = new Position(x=1, y=18)
 
     method text() = "Nivel: " + pj.nivel()
 
     method textColor() = paleta.negro()
 
-    method chocasteConPj(){
-
-    }
 }
 
+object vida{
+    method position() = new Position(x=18, y=19)
+
+    method text() = "Vida: " + pj.vida()
+
+    method textColor() = paleta.negro()
+}
+
+object game_over {
+    method position() = game.center()
+
+    method text() = "GAME OVER"
+
+    method textColor() = paleta.negro() 
+}
+
+object you_win {
+    method position() = game.center()
+
+    method text() = "YOU WIN"
+
+    method textColor() = paleta.negro() 
+}
+
+class Vida_enemigos{
+    const property enemigo
+    var property position = enemigo.position().up(1)
+
+    method text() = "Vida: " + enemigo.vida()
+
+    method textColor() = paleta.negro() 
+
+    method mover_con_enemigo(nueva_posicion){
+        position = nueva_posicion
+        if(enemigo.vida() <= 0){
+                game.removeVisual(self)
+        }
+    }
+}
