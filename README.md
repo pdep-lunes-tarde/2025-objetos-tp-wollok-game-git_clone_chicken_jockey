@@ -1,8 +1,12 @@
 # Grupo
 
-Nombre: **COMPLETAR ACA**
+Nombre: **git_clone_chicken_jockey**
 
-Integrantes: **COMPLETAR ACA**
+Integrantes
+- Francisco Der Ghougassian
+- Facundo Harche
+- Thiago Piccoli
+- Emanuel Prima
 
 # Consigna TP Integrador
 
