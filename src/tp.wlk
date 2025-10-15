@@ -1,5 +1,5 @@
 import wollok.game.*
-import personaje.pj
+import personaje.*
 import textos.*
 import enemigos.*
 import objetos.*
@@ -9,11 +9,97 @@ object configJuego{
     const property ancho = 30
     const property alto = 30
     var clock_enemigos = 0
+    var facilidad = 6
     method configurar() {
         game.width(ancho)
         game.height(alto)
         game.cellSize(16)
         
+    }
+    method jugar() {
+        self.configurar()
+        game.start()
+        self.mostrarMenu()
+    }
+    method termino_el_juego(){
+        game.clear()
+        game.addVisual(game_over)
+        game.addVisual(texto_estadisticas)
+        keyboard.r().onPressDo {
+            game.clear()
+            self.reiniciar_juego()
+        }
+    }
+
+    method reiniciar_juego(){
+        pj.reiniciate()
+        clock_enemigos = 0
+        self.mostrarMenu()
+        tiempo.reiniciate()
+    }
+
+    method agregar_visuales_iniciales(){
+        game.addVisual(pj)
+        game.addVisual(puntuacion)
+        game.addVisual(nivel)
+        game.addVisual(vida)
+        game.addVisual(tiempo)
+    }
+
+    method mostrarMenu(){
+        game.addVisual(texto_menu)
+        pj.posicion_menu()
+        game.addVisual(pj)
+        const ogro = new Ogro()
+        ogro.posicion_menu()
+        game.addVisual(ogro)
+        keyboard.enter().onPressDo {
+            game.clear()
+            self.empezarJuego()
+        }
+        keyboard.c().onPressDo {
+            game.clear()
+            self.mostrar_controles()
+        }
+        keyboard.f().onPressDo {
+            game.clear()
+            self.mostrar_facilidad()
+        }
+    }
+
+    method mostrar_controles() {
+        game.addVisual(controles)
+        game.addVisual(volver_atras)
+        keyboard.b().onPressDo {
+            game.clear()
+            self.mostrarMenu()
+        }
+    }
+    method mostrar_facilidad(){
+        game.addVisual(texto_facilidad)
+        game.addVisual(marcador_facilidad)
+        game.addVisual(volver_atras)
+        keyboard.f().onPressDo{
+            facilidad = 6
+            marcador_facilidad.actualizar(facilidad)
+        }
+        keyboard.m().onPressDo{
+            facilidad = 4
+            marcador_facilidad.actualizar(facilidad)
+        }
+        keyboard.d().onPressDo{
+            facilidad = 2
+            marcador_facilidad.actualizar(facilidad)
+        }
+        keyboard.b().onPressDo {
+            game.clear()
+            self.mostrarMenu()
+        }
+    }
+
+    method empezarJuego(){
+        pj.centrate()
+        self.agregar_visuales_iniciales()
         keyboard.right().onPressDo {
             pj.derecha()
         }
@@ -39,7 +125,7 @@ object configJuego{
             pj.atacar_abajo()
         }
         keyboard.any().onPressDo {
-            if (clock_enemigos == 2){
+            if (clock_enemigos == facilidad){
             const ogro = new Ogro()
             ogro.aparecer()
             keyboard.any().onPressDo{ ogro.moverHacia(pj)}
@@ -55,24 +141,6 @@ object configJuego{
         game.onCollideDo(pj, { otro =>
             otro.chocaste_con_pj()
         })
-        
-
-    }
-    method jugar() {
-        self.configurar()
-        game.start()
-        self.agregar_visuales_iniciales()
-    }
-    method termino_el_juego(){
-        game.clear()
-    }
-
-    method agregar_visuales_iniciales(){
-        game.addVisual(pj)
-        game.addVisual(puntuacion)
-        game.addVisual(nivel)
-        game.addVisual(vida)
-        game.addVisual(tiempo)
     }
 
 }

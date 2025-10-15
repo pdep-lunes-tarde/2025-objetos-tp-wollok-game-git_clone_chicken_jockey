@@ -7,6 +7,7 @@ object pj{
     var property puntuacion = 0
     var property danio = 1
     var property nivel = 0
+    var property enemigos_asesinados = 0 
     method image() = "manzana_16.png"
 
     method arriba(){
@@ -35,6 +36,11 @@ object pj{
     }
     method centrate(){
         position = game.center()
+    }
+
+    method posicion_menu(){ 
+        self.centrate()
+        position = position.left(9)
     }
     method atacar_arriba(){
         const posiciones_a_atacar = self.posiciones_alrededor()
@@ -82,13 +88,13 @@ object pj{
             configJuego.termino_el_juego()
             game.addVisual(you_win)
         }
+        enemigos_asesinados += 1
     }
 
     method fuiste_atacado(enemigo){
         vida -= enemigo.danio()
         if(vida <= 0){
             configJuego.termino_el_juego()
-            game.addVisual(game_over)
         }
     }
     
@@ -96,5 +102,13 @@ object pj{
         if(vida < 5){
             vida += 1
         }
+    }
+
+    method reiniciate(){
+        vida = 3
+        puntuacion = 0
+        danio = 1
+        nivel = 0
+        self.centrate()
     }
 }

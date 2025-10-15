@@ -36,6 +36,12 @@ class Ogro{
         position = position.up(1)
     }
 
+
+    method posicion_menu(){ 
+        self.centrate()
+        position = position.right(9)
+    }
+
     method movete() {
     const x = 0.randomUpTo(game.width()).truncate(0)
     const y = 0.randomUpTo(game.height()).truncate(0)
