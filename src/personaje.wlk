@@ -3,26 +3,35 @@ import tp.configJuego
 
 object pj{
     var property position = game.center()
-    var property vida = 5
+    var property vida = 3
     var property puntuacion = 0
     var property danio = 1
     var property nivel = 0
-    method image() = "manzana.png"
+    method image() = "manzana_16.png"
 
     method arriba(){
-        position = position.up(1)
+        if(position.y() <= configJuego.alto() - 2){ // el numero es para que se vea, varia segun el tamano de las celdas
+            position = position.up(1)
+        }
+        
     }
 
     method abajo(){
+        if(position.y() >= 0){
         position = position.down(1)
+        }
     }
 
     method derecha(){
+        if(position.x() <= configJuego.ancho() - 2){ // el numero es para que se vea, varia segun el tamano de las celdas
         position = position.right(1)
+        }
     }
 
     method izquierda(){
+        if(position.x() >= 0){
         position = position.left(1)
+        }
     }
     method centrate(){
         position = game.center()
@@ -83,4 +92,9 @@ object pj{
         }
     }
     
+    method recibirVida(){
+        if(vida < 5){
+            vida += 1
+        }
+    }
 }

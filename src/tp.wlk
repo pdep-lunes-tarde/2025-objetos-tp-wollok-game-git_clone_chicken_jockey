@@ -2,16 +2,17 @@ import wollok.game.*
 import personaje.pj
 import textos.*
 import enemigos.*
+import objetos.*
 
 object configJuego{
 
-    const ancho = 20
-    const alto = 20
+    const property ancho = 30
+    const property alto = 30
     var clock_enemigos = 0
     method configurar() {
         game.width(ancho)
         game.height(alto)
-        game.cellSize(32)
+        game.cellSize(16)
         
         keyboard.right().onPressDo {
             pj.derecha()
@@ -40,15 +41,15 @@ object configJuego{
         keyboard.any().onPressDo {
             if (clock_enemigos == 2){
             const ogro = new Ogro()
-            ogro.movete()
-            game.addVisual(ogro)
-            game.addVisual(ogro.texto_vida())
-            game.onTick(500, "movimiento_ogro", { ogro.moverHacia(pj)})
+            ogro.aparecer()
+            keyboard.any().onPressDo{ ogro.moverHacia(pj)}
+            const moneda = new Moneda()
+            moneda.aparecer()
             clock_enemigos = 0
-            } else {
-                clock_enemigos += 1
-            }
+            }clock_enemigos += 1
+
         }
+
         game.onTick(1000, "aumentar_tiempo", { tiempo.aumentarTiempo() })
         
         game.onCollideDo(pj, { otro =>

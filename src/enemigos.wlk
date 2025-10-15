@@ -1,5 +1,6 @@
 import personaje.pj
 import textos.Vida_enemigos
+import tp.configJuego
 
 class Ogro{
     var property position = game.center()
@@ -7,7 +8,7 @@ class Ogro{
     var property ultimaPosicion = game.center()
     var property danio = 1
     var property texto_vida = new Vida_enemigos(enemigo = self) 
-    method image() = "ogro.png"
+    method image() = "ogro_16.png"
 
     method derecha(){
         ultimaPosicion = position
@@ -17,6 +18,12 @@ class Ogro{
     method izquierda(n){
         ultimaPosicion = position
         position = position.left(n)
+    }
+
+    method aparecer(){
+        self.movete()
+        game.addVisual(self)
+        game.addVisual(texto_vida)
     }
 
     method abajo(){
