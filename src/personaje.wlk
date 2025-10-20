@@ -11,7 +11,7 @@ object pj {
     var property invulnerable = false
     var property ultima_posicion = position
 
-    method image() = "manzana_16.png"
+    method image() = "soldado_16.png"
 
     method arriba() {
         if (position.y() <= configurar_juego.alto() - 2) { // el numero es para que se vea, varia segun el tamanio de las celdas
@@ -79,12 +79,7 @@ object pj {
         if (puntuacion >= 3) {
             self.subir_nivel()
         }if (nivel >= 3){
-            game.clear()
-            game.addVisual(you_win)
-            game.addVisual(texto_estadisticas)
-            keyboard.r().onPressDo {
-                configurar_juego.reiniciar_juego()
-            }
+            configurar_juego.gane()
         }
     }
 
@@ -107,7 +102,7 @@ object pj {
     method fuiste_atacado(enemigo) {
         vida -= enemigo.danio()
         if (vida <= 0) {
-            configurar_juego.termino_el_juego()
+            configurar_juego.perdi()
         }
     }
     

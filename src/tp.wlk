@@ -22,13 +22,21 @@ object configurar_juego {
         self.mostrar_menu()
     }
 
-    method termino_el_juego() {
+    method perdi() {
         game.clear()
         game.addVisual(game_over)
         game.addVisual(texto_estadisticas)
         keyboard.r().onPressDo {
             self.reiniciar_juego()
         }
+    }
+    method gane() {
+        game.clear()
+            game.addVisual(you_win)
+            game.addVisual(texto_estadisticas)
+            keyboard.r().onPressDo {
+                self.reiniciar_juego()
+            }
     }
 
     method reiniciar_juego() {
