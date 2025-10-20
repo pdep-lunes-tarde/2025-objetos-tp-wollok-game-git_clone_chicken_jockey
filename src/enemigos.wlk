@@ -48,7 +48,7 @@ class Ogro {
 
     method movete() {
         const x = 0.randomUpTo(game.width()).truncate(0)
-        const y = 0.randomUpTo(game.height()).truncate(0)
+        const y = 0.randomUpTo(game.height() - 2).truncate(0)
         position = game.at(x, y)
     }
 
@@ -91,7 +91,7 @@ class Ogro {
     }
 
     method debo_retroceder() {
-        return true
+        return vida > 0
     }
 
 }

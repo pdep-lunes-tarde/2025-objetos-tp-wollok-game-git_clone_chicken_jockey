@@ -3,7 +3,7 @@ import personaje.pj
 class Corazon {
     var property position = game.center()
     
-    method image() = "manzana.png"
+    method image() = "Corazon_16.png"
 
     method aparecer() {
         const x = 0.randomUpTo(game.width()).truncate(0)
@@ -37,7 +37,7 @@ class Moneda {
     }
 
     method chocaste_con_pj() {
-        pj.sumar_puntuacion(3)
+        pj.sumar_puntuacion(2)
         game.removeVisual(self)
     }
 

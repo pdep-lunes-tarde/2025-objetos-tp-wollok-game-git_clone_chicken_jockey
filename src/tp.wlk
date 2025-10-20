@@ -34,9 +34,11 @@ object configurar_juego {
 
     method reiniciar_juego() {
         pj.reiniciate()
+        tiempo.reiniciate()
         clock_enemigos = 0
         self.mostrar_menu()
-        tiempo.reiniciate()
+        
+
     }
 
     method agregar_visuales_iniciales() {
@@ -145,6 +147,7 @@ object configurar_juego {
         }
 
         keyboard.any().onPressDo {
+            
             if (clock_enemigos == facilidad) {
                 const ogro = new Ogro()
                 const moneda = new Moneda()
@@ -152,8 +155,6 @@ object configurar_juego {
                 ogro.aparecer()
 
                 keyboard.any().onPressDo{ ogro.mover_hacia(pj) }
-
-                moneda.aparecer()
 
                 clock_enemigos = 0
                 game.onCollideDo(ogro, {otro => ogro.retrocede(otro)} )
@@ -170,5 +171,20 @@ object configurar_juego {
             otro.chocaste_con_pj()
         })
         
+        
+    }
+
+    method agregar_objeto_aleatorio() {
+        const probabilidad_corazon = 0.3
+
+        const numero_aleatorio = 0.randomUpTo()
+
+        if (numero_aleatorio < probabilidad_corazon) {
+            const corazon = new Corazon()
+            corazon.aparecer()
+        } else  {
+            const moneda = new Moneda()
+            moneda.aparecer()
+        }
     }
 }

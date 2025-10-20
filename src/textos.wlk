@@ -166,4 +166,8 @@ class Vida_enemigos{
     method fuiste_atacado(x,y){
 
     }
+    
+    method debo_retroceder(){
+        return false
+    }
 }
