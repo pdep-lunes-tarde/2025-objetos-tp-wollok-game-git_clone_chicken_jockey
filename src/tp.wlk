@@ -160,8 +160,6 @@ object configurar_juego {
 
                 keyboard.any().onPressDo{ ogro.mover_hacia(pj) }
 
-                self.agregar_objeto_aleatorio()
-
                 clock_enemigos = 0
                 game.onCollideDo(ogro, {otro => ogro.retrocede(otro)} )
             }

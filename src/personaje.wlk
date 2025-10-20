@@ -99,9 +99,9 @@ object pj {
     }
 
     method mataste_un_ogro() {
+        configurar_juego.agregar_objeto_aleatorio()
         self.sumar_puntuacion(1)
         enemigos_asesinados += 1
-        configurar_juego.agregar_objeto_aleatorio()
     }
 
     method fuiste_atacado(enemigo) {
