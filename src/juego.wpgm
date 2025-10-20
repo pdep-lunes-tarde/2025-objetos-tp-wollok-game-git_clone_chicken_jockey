@@ -1,6 +1,5 @@
-import tp.configJuego
+import tp.configurar_juego
 
 program juego {
-    configJuego.jugar()
+    configurar_juego.jugar()
 }
-

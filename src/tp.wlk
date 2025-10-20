@@ -4,24 +4,25 @@ import textos.*
 import enemigos.*
 import objetos.*
 
-object configJuego{
-
-    const property ancho = 30
-    const property alto = 30
+object configurar_juego {
+    var property ancho = 30
+    var property alto = 30
     var clock_enemigos = 0
     var facilidad = 6
+
     method configurar() {
         game.width(ancho)
         game.height(alto)
         game.cellSize(16)
-        
     }
+
     method jugar() {
         self.configurar()
         game.start()
-        self.mostrarMenu()
+        self.mostrar_menu()
     }
-    method termino_el_juego(){
+
+    method termino_el_juego() {
         game.clear()
         game.addVisual(game_over)
         game.addVisual(texto_estadisticas)
@@ -31,14 +32,14 @@ object configJuego{
         }
     }
 
-    method reiniciar_juego(){
+    method reiniciar_juego() {
         pj.reiniciate()
         clock_enemigos = 0
-        self.mostrarMenu()
+        self.mostrar_menu()
         tiempo.reiniciate()
     }
 
-    method agregar_visuales_iniciales(){
+    method agregar_visuales_iniciales() {
         game.addVisual(pj)
         game.addVisual(puntuacion)
         game.addVisual(nivel)
@@ -46,21 +47,26 @@ object configJuego{
         game.addVisual(tiempo)
     }
 
-    method mostrarMenu(){
+    method mostrar_menu() {
+        const ogro = new Ogro()
+
         game.addVisual(texto_menu)
         pj.posicion_menu()
         game.addVisual(pj)
-        const ogro = new Ogro()
+
         ogro.posicion_menu()
         game.addVisual(ogro)
+
         keyboard.enter().onPressDo {
             game.clear()
-            self.empezarJuego()
+            self.empezar_juego()
         }
+
         keyboard.c().onPressDo {
             game.clear()
             self.mostrar_controles()
         }
+
         keyboard.f().onPressDo {
             game.clear()
             self.mostrar_facilidad()
@@ -70,70 +76,89 @@ object configJuego{
     method mostrar_controles() {
         game.addVisual(controles)
         game.addVisual(volver_atras)
+
         keyboard.b().onPressDo {
             game.clear()
-            self.mostrarMenu()
+            self.mostrar_menu()
         }
     }
-    method mostrar_facilidad(){
+    method mostrar_facilidad() {
         game.addVisual(texto_facilidad)
         game.addVisual(marcador_facilidad)
         game.addVisual(volver_atras)
+
         keyboard.f().onPressDo{
             facilidad = 6
             marcador_facilidad.actualizar(facilidad)
         }
+
         keyboard.m().onPressDo{
             facilidad = 4
             marcador_facilidad.actualizar(facilidad)
         }
+
         keyboard.d().onPressDo{
             facilidad = 2
             marcador_facilidad.actualizar(facilidad)
         }
+
         keyboard.b().onPressDo {
             game.clear()
-            self.mostrarMenu()
+            self.mostrar_menu()
         }
     }
 
-    method empezarJuego(){
+    method empezar_juego() {
         pj.centrate()
         self.agregar_visuales_iniciales()
+
         keyboard.right().onPressDo {
             pj.derecha()
         }
+
         keyboard.d().onPressDo {
             pj.atacar_derecha()
         }
+
         keyboard.left().onPressDo {
             pj.izquierda()
         }
+
         keyboard.a().onPressDo {
             pj.atacar_izquierda()
         }
+
         keyboard.up().onPressDo {
             pj.arriba()
         }
+
         keyboard.w().onPressDo {
             pj.atacar_arriba()
         }
+
         keyboard.down().onPressDo {
             pj.abajo()
         }
+
         keyboard.s().onPressDo {
             pj.atacar_abajo()
         }
-        keyboard.any().onPressDo {
-            if (clock_enemigos == facilidad){
-            const ogro = new Ogro()
-            ogro.aparecer()
-            keyboard.any().onPressDo{ ogro.moverHacia(pj)}
-            const moneda = new Moneda()
-            moneda.aparecer()
-            clock_enemigos = 0
-            }clock_enemigos += 1
 
+        keyboard.any().onPressDo {
+            if (clock_enemigos == facilidad) {
+                const ogro = new Ogro()
+                const moneda = new Moneda()
+
+                ogro.aparecer()
+
+                keyboard.any().onPressDo{ ogro.mover_hacia(pj) }
+
+                moneda.aparecer()
+
+                clock_enemigos = 0
+            }
+            
+            clock_enemigos += 1
         }
 
         game.onTick(1000, "aumentar_tiempo", { tiempo.aumentarTiempo() })
@@ -142,7 +167,4 @@ object configJuego{
             otro.chocaste_con_pj()
         })
     }
-
 }
-
-
