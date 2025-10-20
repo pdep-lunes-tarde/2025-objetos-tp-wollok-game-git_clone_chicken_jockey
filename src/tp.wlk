@@ -29,8 +29,8 @@ object configurar_juego {
     }
     method gane() {
         game.clear()
-            game.addVisual(you_win)
-            self.reiniciar_juego() 
+        game.addVisual(you_win)
+        self.reiniciar_juego() 
             
     }
 
@@ -43,10 +43,6 @@ object configurar_juego {
                 clock_enemigos = 0
                 self.mostrar_menu()
             }
-
-        
-        
-
     }
 
     method agregar_visuales_iniciales() {

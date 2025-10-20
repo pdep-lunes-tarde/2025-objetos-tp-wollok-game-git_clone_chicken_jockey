@@ -9,7 +9,7 @@ class Ogro {
     var property danio = 1
     var property texto_vida = new Vida_enemigos(enemigo = self)
     
-    method image() = "ogro_16.png"
+    method image() = "Orco_16.png"
 
     method derecha() {
         ultima_posicion = position
