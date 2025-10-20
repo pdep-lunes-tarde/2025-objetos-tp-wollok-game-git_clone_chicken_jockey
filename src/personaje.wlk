@@ -8,30 +8,32 @@ object pj{
     var property danio = 1
     var property nivel = 0
     var property enemigos_asesinados = 0 
+    var velocidad = 1
+    var property invulnerable = false
     method image() = "manzana_16.png"
 
     method arriba(){
         if(position.y() <= configJuego.alto() - 2){ // el numero es para que se vea, varia segun el tamano de las celdas
-            position = position.up(1)
+            position = position.up(velocidad)
         }
         
     }
 
     method abajo(){
         if(position.y() >= 0){
-        position = position.down(1)
+        position = position.down(velocidad)
         }
     }
 
     method derecha(){
         if(position.x() <= configJuego.ancho() - 2){ // el numero es para que se vea, varia segun el tamano de las celdas
-        position = position.right(1)
+        position = position.right(velocidad)
         }
     }
 
     method izquierda(){
         if(position.x() >= 0){
-        position = position.left(1)
+        position = position.left(velocidad)
         }
     }
     method centrate(){
@@ -65,16 +67,35 @@ object pj{
     
     method sumarPuntuacion(puntosASumar){
         puntuacion += puntosASumar
-    }
-
-    method subirNivel(){
-        if(puntuacion == 3){
+        if(puntuacion >= 3){
             danio += 1
             nivel += 1
             puntuacion = 0
-        }
+        } 
     }
 
+   /* method subir_nivel(){
+        game.addVisual(imagen_subida_de_nivel)
+        game.addVisual(texto_subida_de_nivel)
+        nivel += 1
+            keyboard.s().onPressDo{
+                velocidad += 1
+                game.removeVisual(imagen_subida_de_nivel)
+                game.removeVisual(texto_subida_de_nivel)
+            }
+            keyboard.d().onPressDo{
+                danio += 1
+                game.removeVisual(imagen_subida_de_nivel)
+                game.removeVisual(texto_subida_de_nivel)
+            }
+            keyboard.v().onPressDo{
+                self.recibirVida()
+                game.removeVisual(imagen_subida_de_nivel)
+                game.removeVisual(texto_subida_de_nivel)
+            }
+        
+    }
+    */
     method posiciones_alrededor(){
         return [position.up(1), position.down(1), position.left(1), position.right(1)]
     }
@@ -83,7 +104,6 @@ object pj{
 
     method mataste_un_ogro(){
         self.sumarPuntuacion(1)
-        self.subirNivel()
         if(nivel >= 3){
             configJuego.termino_el_juego()
             game.addVisual(you_win)
@@ -93,14 +113,16 @@ object pj{
 
     method fuiste_atacado(enemigo){
         vida -= enemigo.danio()
+        barra_de_vida.restar_vida()
         if(vida <= 0){
             configJuego.termino_el_juego()
         }
     }
     
     method recibirVida(){
-        if(vida < 5){
+        if(vida < 3){
             vida += 1
+            barra_de_vida.sumar_vida()
         }
     }
 
@@ -110,5 +132,39 @@ object pj{
         danio = 1
         nivel = 0
         self.centrate()
+    }
+}
+
+object barra_de_vida{
+    var property corazones = [new Imagen_corazon (position = new Position(x = configJuego.ancho() - 2, y = configJuego.alto() - 1)), new Imagen_corazon (position = new Position(x = configJuego.ancho() - 3, y = configJuego.alto() - 1)), new Imagen_corazon (position = new Position(x = configJuego.ancho() - 4, y = configJuego.alto() - 1))]
+    var property corazones_vacios = []
+
+    method restar_vida(){
+        const ultimo_corazon = corazones.last()
+        const corazon_vacio = new Imagen_corazon_vacio(position = ultimo_corazon.position())
+        self.actualizar_corazon_en_juego(corazon_vacio)
+        corazones_vacios.remove(ultimo_corazon) 
+        corazones_vacios.add(corazon_vacio)      
+
+    }
+    method sumar_vida(){      
+        const ultimo_corazon_vacio = corazones_vacios.last()
+        const corazon = new Imagen_corazon(position = ultimo_corazon_vacio.position())
+        self.actualizar_corazon_en_juego(corazon)
+        corazones_vacios.remove(ultimo_corazon_vacio) 
+        corazones.add(corazon)      
+    }
+
+    method actualizar_corazon_en_juego(corazon_nuevo){
+        const ultimo_corazon = corazones.last()
+        game.removeVisual(ultimo_corazon)
+        corazones.remove(ultimo_corazon)
+        game.addVisual(corazon_nuevo)
+        corazones.add(corazon_nuevo)
+    }
+    method reiniciate(){
+        corazones = [new Imagen_corazon (position = new Position(x = configJuego.ancho() - 2, y = configJuego.alto() - 1)),
+                     new Imagen_corazon (position = new Position(x = configJuego.ancho() - 3, y = configJuego.alto() - 1)),
+                     new Imagen_corazon (position = new Position(x = configJuego.ancho() - 4, y = configJuego.alto() - 1))]
     }
 }

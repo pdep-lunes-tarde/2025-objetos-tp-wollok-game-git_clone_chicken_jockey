@@ -24,7 +24,7 @@ object nivel {
 }
 
 object vida{
-    method position() = new Position(x = configJuego.ancho() - 3, y = configJuego.alto() - 1)
+    method position() = new Position(x = configJuego.ancho() - 3, y = configJuego.alto() - 4)
 
     method text() = "Vida: " + pj.vida()
 
@@ -104,6 +104,14 @@ object texto_facilidad{
     method textColor() = paleta.negro() 
 }
 
+object texto_subida_de_nivel{
+    method position() = game.center()
+
+    method text() = "SUBISTE DE NIVEL! \n\nElegi una estadistica \n\nDanio: D \n Vida: V \n Velocidad: S "
+
+    method textColor() = paleta.negro() 
+}
+
 object marcador_facilidad{
     var property facilidad = 6
     const property posicion_inicial = game.center().left(6).down(2)
@@ -118,6 +126,24 @@ object marcador_facilidad{
         position = posicion_inicial
         position = self.position().up(facilidad)
     }
+}
+
+object imagen_subida_de_nivel {
+    const property position = new Position(x=0, y=0)
+
+    method image() = "Fondo_subida_de_nivel.jpg"
+}
+
+class Imagen_corazon{
+    var property position
+
+    method image() = "Corazon_16.png"
+}
+
+class Imagen_corazon_vacio{
+    var property position
+
+    method image() = "Corazon_vacio_16.png"
 }
 class Vida_enemigos{
     const property enemigo

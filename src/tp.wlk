@@ -36,14 +36,16 @@ object configJuego{
         clock_enemigos = 0
         self.mostrarMenu()
         tiempo.reiniciate()
+        barra_de_vida.reiniciate()
     }
 
     method agregar_visuales_iniciales(){
         game.addVisual(pj)
         game.addVisual(puntuacion)
         game.addVisual(nivel)
-        game.addVisual(vida)
         game.addVisual(tiempo)
+        barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
+        game.addVisual(vida)
     }
 
     method mostrarMenu(){
@@ -135,14 +137,18 @@ object configJuego{
             }clock_enemigos += 1
 
         }
+        
+
 
         game.onTick(1000, "aumentar_tiempo", { tiempo.aumentarTiempo() })
         
         game.onCollideDo(pj, { otro =>
             otro.chocaste_con_pj()
         })
+        
     }
 
 }
+
 
 

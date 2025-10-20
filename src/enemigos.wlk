@@ -53,23 +53,46 @@ class Ogro{
     }
 
     method chocaste_con_pj(){
+        if(!pj.invulnerable()){
         pj.fuiste_atacado(self)
+        }
         position = ultimaPosicion
         texto_vida.mover_con_enemigo(position.up(1))
 
     }
 
     method moverHacia(target) {
+        const random = 0.randomUpTo(1)
+        
+        if (random > 0.5) {
+        self.mover_en_x(target)
+        if (self.position().x() == target.position().x()) {
+            self.mover_en_y(target)
+        }
+    } else { 
+        self.mover_en_y(target)
+        if (self.position().y() == target.position().y()) {
+            self.mover_en_x(target)
+        }
+    }
+
+        texto_vida.mover_con_enemigo(position.up(1))
+    }
+
+    method mover_en_x(target){
         if (self.position().x() < target.position().x()){
             self.derecha()
         } else if (self.position().x() > target.position().x()){
             self.izquierda(1)
-        } else if (self.position().y() > target.position().y()){
+        } 
+    }
+
+    method mover_en_y(target){
+        if (self.position().y() > target.position().y()){
             self.abajo()
-        } else if (self.position().y() < target.position().y()){
+        }else if (self.position().y() < target.position().y()){
             self.arriba()
         } 
-        texto_vida.mover_con_enemigo(position.up(1))
     }
 
     method fuiste_atacado(enemigo, nueva_posicion){
