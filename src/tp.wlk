@@ -147,7 +147,7 @@ object configurar_juego {
         }
 
         keyboard.any().onPressDo {
-            
+
             if (clock_enemigos == facilidad) {
                 const ogro = new Ogro()
                 const moneda = new Moneda()
@@ -177,7 +177,7 @@ object configurar_juego {
     method agregar_objeto_aleatorio() {
         const probabilidad_corazon = 0.3
 
-        const numero_aleatorio = 0.randomUpTo()
+        const numero_aleatorio = 0.randomUpTo(1)
 
         if (numero_aleatorio < probabilidad_corazon) {
             const corazon = new Corazon()

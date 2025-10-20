@@ -39,9 +39,9 @@ object game_over {
 }
 
 object you_win {
-    method position() = game.center()
+    method position() = game.center().up(2)
 
-    method text() = "YOU WIN"
+    method text() = "'R' PARA REINICIAR\n\nYOU WIN"
 
     method textColor() = paleta.negro()
 }

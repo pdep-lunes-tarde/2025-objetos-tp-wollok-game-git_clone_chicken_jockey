@@ -76,6 +76,7 @@ object pj {
         }if (nivel >= 3){
             game.clear()
             game.addVisual(you_win)
+            game.addVisual(texto_estadisticas)
         }
     }
 
