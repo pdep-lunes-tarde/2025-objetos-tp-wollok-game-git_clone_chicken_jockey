@@ -58,7 +58,6 @@ class Ogro {
 
     method chocaste_con_pj() {
         pj.fuiste_atacado(self)
-        pj.retrocede(self)
         self.retrocede(self)
 
     }
