@@ -2,7 +2,7 @@ import personaje.*
 import tp.configurar_juego
 
 object puntuacion {
-    method position() = new Position(x = 2, y = configurar_juego.alto() - 1)
+    method position() = new Position(x = 3, y = configurar_juego.alto() - 1)
 
     method text() = "Puntuacion: " + pj.puntuacion()
 
@@ -14,7 +14,7 @@ object paleta {
 }
 
 object nivel {
-    method position() = new Position(x = 2, y = configurar_juego.alto() - 2)
+    method position() = new Position(x = 3, y = configurar_juego.alto() - 2)
 
     method text() = "Nivel: " + pj.nivel()
 
@@ -41,7 +41,7 @@ object game_over {
 object you_win {
     method position() = game.center().up(2)
 
-    method text() = "'R' PARA REINICIAR\n\nYOU WIN"
+    method text() = "YOU WIN\n\n'R' PARA REINICIAR"
 
     method textColor() = paleta.negro()
 }

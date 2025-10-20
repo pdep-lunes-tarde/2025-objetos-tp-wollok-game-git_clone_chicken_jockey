@@ -77,6 +77,9 @@ object pj {
             game.clear()
             game.addVisual(you_win)
             game.addVisual(texto_estadisticas)
+            keyboard.r().onPressDo {
+                configurar_juego.reiniciar_juego()
+            }
         }
     }
 
