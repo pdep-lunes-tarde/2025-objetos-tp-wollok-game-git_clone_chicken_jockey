@@ -9,29 +9,34 @@ object pj {
     var property nivel = 0
     var property enemigos_asesinados = 0 
     var property invulnerable = false
+    var property ultima_posicion = position
 
     method image() = "manzana_16.png"
 
     method arriba() {
         if (position.y() <= configurar_juego.alto() - 2) { // el numero es para que se vea, varia segun el tamanio de las celdas
+            ultima_posicion = position
             position = position.up(1)
         }
     }
 
     method abajo() {
         if (position.y() >= 0) {
+            ultima_posicion = position
             position = position.down(1)
         }
     }
 
     method derecha() {
         if (position.x() <= configurar_juego.ancho() - 2) { // el numero es para que se vea, varia segun el tamanio de las celdas
+            ultima_posicion = position
             position = position.right(1)
         }
     }
 
     method izquierda() {
         if (position.x() >= 0){
+            ultima_posicion = position
             position = position.left(1)
         }
     }
@@ -122,6 +127,10 @@ object pj {
 
     method debo_retroceder() {
         return false
+    }
+
+    method retrocede(otro) {
+        position = ultima_posicion
     }
 }
 

@@ -27,12 +27,12 @@ object configurar_juego {
         game.addVisual(game_over)
         game.addVisual(texto_estadisticas)
         keyboard.r().onPressDo {
-            game.clear()
             self.reiniciar_juego()
         }
     }
 
     method reiniciar_juego() {
+        game.clear()
         pj.reiniciate()
         tiempo.reiniciate()
         clock_enemigos = 0
