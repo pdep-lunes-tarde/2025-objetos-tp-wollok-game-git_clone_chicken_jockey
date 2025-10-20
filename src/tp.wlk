@@ -25,26 +25,26 @@ object configurar_juego {
     method perdi() {
         game.clear()
         game.addVisual(game_over)
-        game.addVisual(texto_estadisticas)
-        keyboard.r().onPressDo {
-            self.reiniciar_juego()
-        }
+        self.reiniciar_juego() 
     }
     method gane() {
         game.clear()
             game.addVisual(you_win)
-            game.addVisual(texto_estadisticas)
-            keyboard.r().onPressDo {
-                self.reiniciar_juego()
-            }
+            self.reiniciar_juego() 
+            
     }
 
     method reiniciar_juego() {
-        game.clear()
-        pj.reiniciate()
-        tiempo.reiniciate()
-        clock_enemigos = 0
-        self.mostrar_menu()
+        game.addVisual(texto_estadisticas)
+            keyboard.r().onPressDo {
+                game.clear()
+                pj.reiniciate()
+                tiempo.reiniciate()
+                clock_enemigos = 0
+                self.mostrar_menu()
+            }
+
+        
         
 
     }
