@@ -1,4 +1,5 @@
-import tpIntegrador.*
+import wollok.game.*
+import juego.*
 
 test "Test de prueba" {
 	assert.equals(4, 2 + 2)
