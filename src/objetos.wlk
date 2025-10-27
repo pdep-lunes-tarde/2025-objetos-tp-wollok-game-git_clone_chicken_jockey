@@ -78,7 +78,7 @@ class Cofre {
         } else if (pos_objeto == 1) {
             return new Espada()
         } else {
-            return new Reloj()
+            return new Botas()
         }
 
     }
@@ -130,7 +130,7 @@ class Escudo inherits Objeto_especial ( image = "Shield.png") {
     }
 }
 
-class Reloj inherits Objeto_especial ( image = "Botas.png") {
+class Botas inherits Objeto_especial ( image = "Botas.png") {
 
     override method efecto_unico(){     
         configurar_juego.sumar_lentitud_enemigos()
