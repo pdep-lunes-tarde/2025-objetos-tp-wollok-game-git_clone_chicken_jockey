@@ -227,6 +227,7 @@ object pj {
         vida = 3
         puntuacion_actual = 0
         puntuacion_total = 0
+        enemigos_asesinados = 0
         danio = 1
         nivel = 0
         self.centrate()
