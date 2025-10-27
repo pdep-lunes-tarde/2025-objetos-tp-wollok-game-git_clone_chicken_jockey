@@ -39,6 +39,7 @@ object configurar_juego {
             keyboard.r().onPressDo {
                 game.clear()
                 pj.reiniciate()
+                barra_de_vida.reiniciate()
                 tiempo.reiniciate()
                 clock_enemigos = 0
                 self.mostrar_menu()
@@ -50,7 +51,8 @@ object configurar_juego {
         game.addVisual(puntuacion)
         game.addVisual(nivel)
         game.addVisual(tiempo)
-        game.addVisual(vida)
+    barra_de_vida.corazones_vacios().forEach({corazon_vacio => game.addVisual(corazon_vacio)})
+    barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
     }
 
     method mostrar_menu() {
