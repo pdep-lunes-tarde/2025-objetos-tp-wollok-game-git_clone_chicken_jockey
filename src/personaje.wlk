@@ -212,8 +212,10 @@ object pj {
     }
 
     method eliminar_escudo(){
-        game.removeVisual(escudos.last())
-        escudos.remove(escudos.last())
+        if (!escudos.isEmpty()) {
+            game.removeVisual(escudos.last())
+            escudos.remove(escudos.last())
+        }
     }
 
     method agregar_objeto_especial(objeto){
