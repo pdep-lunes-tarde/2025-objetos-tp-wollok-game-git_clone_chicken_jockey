@@ -4,10 +4,13 @@ import tp.configurar_juego
 
 class Ogro {
     var property position = game.center()
-    var property vida = 3
+    var  property vida
     var property ultima_posicion = game.center()
     var property danio = 1
     var property texto_vida = new Vida_enemigos(enemigo = self)
+    const lentitud = 0
+    var property clock_movimientos = 0
+
     
     method image() = "Orco_16.png"
 
@@ -63,15 +66,20 @@ class Ogro {
     }
 
     method mover_hacia(target) {
-        if (self.position().x() < target.position().x()) {
-            self.derecha()
-        } else if (self.position().x() > target.position().x()) {
-            self.izquierda()
-        } else if (self.position().y() > target.position().y()) {
-            self.abajo()
-        } else if (self.position().y() < target.position().y()) {
-            self.arriba()
-        } 
+        if(clock_movimientos == lentitud){
+            if (self.position().x() < target.position().x()) {
+                self.derecha()
+            } else if (self.position().x() > target.position().x()) {
+                self.izquierda()
+            } else if (self.position().y() > target.position().y()) {
+                self.abajo()
+            } else if (self.position().y() < target.position().y()) {
+                self.arriba()
+            } 
+            clock_movimientos = 0
+            }else{
+                clock_movimientos += 1
+            }
     }
 
     method fuiste_atacado(enemigo, nueva_posicion) {

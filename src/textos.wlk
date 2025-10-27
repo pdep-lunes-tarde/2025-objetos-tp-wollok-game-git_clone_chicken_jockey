@@ -4,7 +4,7 @@ import tp.configurar_juego
 object puntuacion {
     method position() = new Position(x = 3, y = configurar_juego.alto() - 1)
 
-    method text() = "Puntuacion: " + pj.puntuacion()
+    method text() = "Puntuacion: " + pj.puntuacion_actual()
 
     method textColor() = paleta.negro()
 }
@@ -91,7 +91,7 @@ object volver_atras {
 object texto_estadisticas {
     method position() = game.center().down(5)
 
-    method text() = "Enemigos asesinados: " + pj.enemigos_asesinados() + "\nNivel alcanzado: " + pj.nivel() + "\nTiempo sobrevivido: " + tiempo.tiempo() + "\n\nPuntuacion final: " + (pj.puntuacion() + pj.nivel() * 3)
+    method text() = "Enemigos asesinados: " + pj.enemigos_asesinados() + "\nNivel alcanzado: " + pj.nivel() + "\nTiempo sobrevivido: " + tiempo.tiempo() + "\n\nPuntuacion final: " + pj.puntuacion_total()
 
     method textColor() = paleta.negro()
 }
@@ -105,11 +105,19 @@ object texto_facilidad {
 }
 
 object texto_subida_de_nivel{
-    method position() = game.center()
+    method position() = game.center().up(5)
 
-    method text() = "SUBISTE DE NIVEL! \n\nElegi una estadistica \n\nDanio: D \n Vida: V \n Velocidad: S "
+    method text() = "SUBISTE DE NIVEL! \n\nElegi una objeto "
 
     method textColor() = paleta.negro() 
+}
+object text_seleccion_objetos {
+    method position() = game.center().left(4)
+
+    method text() = "Presiona '0' para  -> \n\nPresiona '1' para  -> \n\nPresiona '2' para -> "
+
+    method textColor() = paleta.negro() 
+  
 }
 
 object marcador_facilidad {
@@ -127,12 +135,6 @@ object marcador_facilidad {
         position = self.position().up(facilidad)
     }
 }
-
-/*object imagen_subida_de_nivel {
-    const property position = new Position(x=0, y=0)
-
-    method image() = "Fondo_subida_de_nivel.jpg"
-}*/
 
 class Imagen_corazon{
     var property position
@@ -171,3 +173,4 @@ class Vida_enemigos{
         return false
     }
 }
+

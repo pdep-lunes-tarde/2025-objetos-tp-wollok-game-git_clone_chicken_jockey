@@ -9,6 +9,8 @@ object configurar_juego {
     var property alto = 30
     var clock_enemigos = 0
     var facilidad = 6
+    var lentitud_enemigos = 0
+    var cantidad_enemigos = 0
 
     method configurar() {
         game.width(ancho)
@@ -43,6 +45,8 @@ object configurar_juego {
                 tiempo.reiniciate()
                 clock_enemigos = 0
                 self.mostrar_menu()
+                lentitud_enemigos = 0
+                cantidad_enemigos = 0
             }
     }
 
@@ -51,12 +55,12 @@ object configurar_juego {
         game.addVisual(puntuacion)
         game.addVisual(nivel)
         game.addVisual(tiempo)
-    barra_de_vida.corazones_vacios().forEach({corazon_vacio => game.addVisual(corazon_vacio)})
-    barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
+        barra_de_vida.corazones_vacios().forEach({corazon_vacio => game.addVisual(corazon_vacio)})
+        barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
     }
 
     method mostrar_menu() {
-        const ogro = new Ogro()
+        const ogro = new Ogro(vida = 3)
 
         game.addVisual(texto_menu)
         pj.posicion_menu()
@@ -118,6 +122,8 @@ object configurar_juego {
 
     method empezar_juego() {
         pj.centrate()
+        const moneda = new Moneda()
+        moneda.aparecer()
         self.agregar_visuales_iniciales()
 
         keyboard.right().onPressDo {
@@ -154,16 +160,16 @@ object configurar_juego {
 
         keyboard.any().onPressDo {
 
-            if (clock_enemigos == facilidad) {
-                const ogro = new Ogro()
-                const moneda = new Moneda()
+            if (clock_enemigos >= facilidad - pj.nivel() && cantidad_enemigos < 10) {
+                const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
 
                 ogro.aparecer()
-
+                
                 keyboard.any().onPressDo{ ogro.mover_hacia(pj) }
 
                 clock_enemigos = 0
                 game.onCollideDo(ogro, {otro => ogro.retrocede(otro)} )
+                cantidad_enemigos += 1
             }
             
             clock_enemigos += 1
@@ -186,11 +192,44 @@ object configurar_juego {
         const numero_aleatorio = 0.randomUpTo(1)
 
         if (numero_aleatorio < probabilidad_corazon) {
-            const corazon = new Corazon()
-            corazon.aparecer()
+            const pocion_vida = new Pocion_vida()
+            pocion_vida.aparecer()
         } else  {
             const moneda = new Moneda()
             moneda.aparecer()
         }
+    }
+    method sumar_lentitud_enemigos() {
+        lentitud_enemigos += 1
+    }
+
+    method reducir_cantidad_enemigos() {
+        if (cantidad_enemigos > 0) {
+            cantidad_enemigos -= 1
+        }
+    }
+
+    method mostrar_menu_subida_nivel(objetos_aleatorios) {
+        game.clear()
+        cantidad_enemigos = 0
+        objetos_aleatorios.forEach({objeto => game.addVisual(objeto)})
+        game.addVisual(texto_subida_de_nivel)
+        game.addVisual(text_seleccion_objetos)
+        keyboard.num0().onPressDo {
+           game.clear()
+           self.empezar_juego()
+           pj.agregar_objeto_especial(objetos_aleatorios.get(0))
+        }
+        keyboard.num1().onPressDo {
+           game.clear()
+           self.empezar_juego()
+           pj.agregar_objeto_especial(objetos_aleatorios.get(1))
+        }
+        keyboard.num2().onPressDo {
+           game.clear()
+           self.empezar_juego()
+           pj.agregar_objeto_especial(objetos_aleatorios.get(2))
+        }
+        
     }
 }

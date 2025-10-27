@@ -1,16 +1,20 @@
 import textos.*
 import tp.configurar_juego
+import objetos.*
 
 object pj {
     var property position = game.center()
     var property vida = 3
-    var property puntuacion = 0
+    var property puntuacion_actual = 0
+    var property puntuacion_total = 0 
     var property danio = 1
     var property nivel = 0
     var property enemigos_asesinados = 0 
     var property invulnerable = false
     var atacando = false
     var property ultima_posicion = position
+    const escudos = []
+    const objetos_especiales = []
 
     var property image = "Soldado_idle.png"
 
@@ -18,6 +22,7 @@ object pj {
         if (position.y() <= configurar_juego.alto() - 2 && ( game.getObjectsIn(position.up(1)).isEmpty() || !game.getObjectsIn(position.up(1)).first().debo_retroceder())) { // el numero es para que se vea, varia segun el tamanio de las celdas
             ultima_posicion = position
             position = position.up(1)
+            objetos_especiales.forEach({objeto => objeto.efecto_por_movimiento()})
         }
     }
 
@@ -25,6 +30,7 @@ object pj {
         if (position.y() >= 0 && ( game.getObjectsIn(position.down(1)).isEmpty() || !game.getObjectsIn(position.down(1)).first().debo_retroceder())) {
             ultima_posicion = position
             position = position.down(1)
+            objetos_especiales.forEach({objeto => objeto.efecto_por_movimiento()})
         }
     }
 
@@ -32,6 +38,7 @@ object pj {
         if (position.x() <= configurar_juego.ancho() - 2 && ( game.getObjectsIn(position.right(1)).isEmpty() || !game.getObjectsIn(position.right(1)).first().debo_retroceder())) { // el numero es para que se vea, varia segun el tamanio de las celdas
             ultima_posicion = position
             position = position.right(1)
+            objetos_especiales.forEach({objeto => objeto.efecto_por_movimiento()})
         }
     }
 
@@ -39,6 +46,7 @@ object pj {
         if (position.x() >= 0 && ( game.getObjectsIn(position.left(1)).isEmpty() || !game.getObjectsIn(position.left(1)).first().debo_retroceder())){
             ultima_posicion = position
             position = position.left(1)
+            objetos_especiales.forEach({objeto => objeto.efecto_por_movimiento()})
         }
     }
 
@@ -49,6 +57,7 @@ object pj {
 
     method centrate() {
         position = game.center()
+        image = "Soldado_idle.png"
     }
 
     method animacion_ataque(direccion) {
@@ -125,8 +134,9 @@ object pj {
     }
     
     method sumar_puntuacion(puntos_a_sumar) {
-        puntuacion += puntos_a_sumar
-        if (puntuacion >= 3) {
+        puntuacion_actual += puntos_a_sumar
+        puntuacion_total += puntos_a_sumar
+        if (puntuacion_actual >= 5) {
             self.subir_nivel()
         }if (nivel >= 3){
             configurar_juego.gane()
@@ -134,9 +144,8 @@ object pj {
     }
 
     method subir_nivel() {
-            danio += 1
-            nivel += 1
-            puntuacion = 0
+            const cofre = new Cofre()
+            cofre.aparecer()
     }
 
     method posiciones_alrededor() {
@@ -146,16 +155,21 @@ object pj {
     method mataste_un_ogro() {
         configurar_juego.agregar_objeto_aleatorio()
         self.sumar_puntuacion(1)
+        configurar_juego.reducir_cantidad_enemigos()
         enemigos_asesinados += 1
     }
 
     method fuiste_atacado(enemigo) {
-        vida -= enemigo.danio()
-        barra_de_vida.restar_vida()
-        if (vida <= 0) {
-            self.moriste()
+        if (escudos == [] && vida >0){
+            vida -= enemigo.danio()
+            barra_de_vida.restar_vida()
+            if (vida <= 0) {
+                self.moriste()
+            }
+            self.animacion_fuiste_atacado()
+        } else{
+            self.eliminar_escudo()
         }
-        self.animacion_fuiste_atacado()
     }
 
     method moriste() {
@@ -180,20 +194,44 @@ object pj {
     }
     
     method recibir_vida() {
-        if (vida < 5) {
+        if (vida < 3) {
             vida += 1
             barra_de_vida.sumar_vida()
         }
     }
 
+    method aumentar_danio(){
+        danio += 1
+    }
+
+    method dar_escudo(){
+        const escudo = new Escudo()
+        escudo.position(new Position(x = configurar_juego.ancho() - 5 + escudos.size(), y = configurar_juego.alto() - 1))
+        escudos.add(escudo)
+        game.addVisual(escudo)
+    }
+
+    method eliminar_escudo(){
+        game.removeVisual(escudos.last())
+        escudos.remove(escudos.last())
+    }
+
+    method agregar_objeto_especial(objeto){
+        objeto.efecto_unico()
+        objetos_especiales.add(objeto)
+    }
+
     method reiniciate() {
         vida = 3
-        puntuacion = 0
+        puntuacion_actual = 0
+        puntuacion_total = 0
         danio = 1
         nivel = 0
         self.centrate()
         atacando = false
         image = "Soldado_idle.png"
+        objetos_especiales.clear()
+        escudos.clear()
     }
 
     method debo_retroceder() {
@@ -213,8 +251,10 @@ object barra_de_vida{
                                      new Imagen_corazon_vacio (position = new Position(x = configurar_juego.ancho() - 4, y = configurar_juego.alto() - 1))]
 
     method restar_vida(){
+        
         game.removeVisual(corazones.last())
         corazones.remove(corazones.last())
+        
      
     }
     method sumar_vida(){      
@@ -235,5 +275,17 @@ class Imagen_efecto_ataque {
 
     method aparece() {
         game.addVisual(self)
+    }
+
+    method debo_retroceder() {
+        return false
+    }
+
+    method chocaste_con_pj() {
+
+    }
+
+    method fuiste_atacado(a,b){
+
     }
 }   
