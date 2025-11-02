@@ -11,6 +11,7 @@ object configurar_juego {
     var facilidad = 6
     var lentitud_enemigos = 0
     var cantidad_enemigos = 0
+    const cantidad_enemigos_max = 10
 
     method configurar() {
         game.width(ancho)
@@ -160,7 +161,7 @@ object configurar_juego {
 
         keyboard.any().onPressDo {
 
-            if (clock_enemigos >= facilidad - pj.nivel() && cantidad_enemigos < 10) {
+            if (clock_enemigos >= facilidad - pj.nivel() && cantidad_enemigos < cantidad_enemigos_max) {
                 const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
 
                 ogro.aparecer()

@@ -1,5 +1,5 @@
 import src.tp.*
-import personaje.pj
+import personaje.*
 
 class Pocion_vida {
     var property position = game.center()
@@ -50,19 +50,35 @@ class Moneda {
 class Cofre {
     var property position = game.center()
     const lista_objetos = ["Escudo", "Espada", "Reloj"]
+    const cantidad_cofres_max = 3
+
+    method cantidad_cofres_max() = cantidad_cofres_max
     
     method image() = "chest.png"
 
     method aparecer() {
-        const x = 0.randomUpTo(game.width()).truncate(0)
-        const y = 0.randomUpTo(game.height()).truncate(0)
-        position = game.at(x,y)
+        if (self.puede_aparecer()) {
+            const x = self.generar_ratio(2, pj.position().x()).anyOne()
+            const y = self.generar_ratio(2, pj.position().y()).anyOne()
+            position = game.at(x, y)
 
-        game.addVisual(self)
+            game.addVisual(self)
+        }
+    }
+
+    method puede_aparecer() = pj.cofres().size() < cantidad_cofres_max
+
+    method generar_ratio(radio, coordenada) { // Ver si el pj se encuentra en algun borde y/o extremo de la pantalla, puede aparecer justo por fuera de la misma
+        const lista = (-radio..radio).asList()
+
+        lista.remove(0)
+
+        return lista.map{ numero => coordenada + numero}
     }
 
     method chocaste_con_pj() {
         pj.nivel(pj.nivel() + 1)
+        pj.cofres().clear()
         game.clear()
         game.removeVisual(self)
         pj.puntuacion_actual(0)

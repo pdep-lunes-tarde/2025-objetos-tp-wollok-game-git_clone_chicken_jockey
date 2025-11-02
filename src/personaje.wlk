@@ -13,6 +13,7 @@ object pj {
     var property invulnerable = false
     var atacando = false
     var property ultima_posicion = position
+    const cofres = []
     const escudos = []
     const objetos_especiales = []
 
@@ -143,9 +144,13 @@ object pj {
         }
     }
 
+    method cofres() = cofres
+
     method subir_nivel() {
-            const cofre = new Cofre()
-            cofre.aparecer()
+        const cofre = new Cofre()
+
+        cofre.aparecer()
+        cofres.add(cofre)
     }
 
     method posiciones_alrededor() {
@@ -233,6 +238,7 @@ object pj {
         self.centrate()
         atacando = false
         image = "Soldado_idle.png"
+        cofres.clear()
         objetos_especiales.clear()
         escudos.clear()
     }
