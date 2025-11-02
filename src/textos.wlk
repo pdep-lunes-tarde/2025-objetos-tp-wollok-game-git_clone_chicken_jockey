@@ -19,7 +19,6 @@ object nivel {
     method text() = "Nivel: " + pj.nivel()
 
     method textColor() = paleta.negro()
-
 }
 
 object vida {
@@ -41,7 +40,7 @@ object game_over {
 object you_win {
     method position() = game.center().up(2)
 
-    method text() = "YOU WIN\n\n'R' PARA REINICIAR"
+    method text() = "YOU WIN\n\nPRESIONA 'R' PARA REINICIAR"
 
     method textColor() = paleta.negro()
 }
@@ -104,20 +103,20 @@ object texto_facilidad {
     method textColor() = paleta.negro()
 }
 
-object texto_subida_de_nivel{
+object texto_subida_de_nivel {
     method position() = game.center().up(5)
 
-    method text() = "SUBISTE DE NIVEL! \n\nElegi una objeto "
+    method text() = "SUBISTE DE NIVEL!\n\nElegi un objeto..."
 
     method textColor() = paleta.negro() 
 }
+
 object text_seleccion_objetos {
     method position() = game.center().left(4)
 
-    method text() = "Presiona '0' para  -> \n\nPresiona '1' para  -> \n\nPresiona '2' para -> "
+    method text() = "Presiona '0' para ->\n\nPresiona '1' para ->\n\nPresiona '2' para ->"
 
-    method textColor() = paleta.negro() 
-  
+    method textColor() = paleta.negro()
 }
 
 object marcador_facilidad {
@@ -129,25 +128,25 @@ object marcador_facilidad {
 
     method textColor() = paleta.negro()
 
-    method actualizar(nueva_facilidad){
+    method actualizar(nueva_facilidad) {
         self.facilidad(nueva_facilidad / 2)
         position = posicion_inicial
         position = self.position().up(facilidad)
     }
 }
 
-class Imagen_corazon{
+class Imagen_corazon {
     var property position
 
     method image() = "Corazon_16.png"
 }
 
-class Imagen_corazon_vacio{
+class Imagen_corazon_vacio {
     var property position
 
     method image() = "Corazon_vacio_16.png"
 }
-class Vida_enemigos{
+class Vida_enemigos {
     const property enemigo
     var property position = enemigo.position().up(1)
 
@@ -158,19 +157,13 @@ class Vida_enemigos{
     method mover_con_enemigo() {
         position = enemigo.position().up(1)
 
-        if (enemigo.vida() <= 0) {
+        if (enemigo.vida() <= 0)
             game.removeVisual(self)
-        }
     }
-    method chocaste_con_pj() {
-      
-    }
-    method fuiste_atacado(x,y){
 
-    }
+    method chocaste_con_pj() {}
+
+    method fuiste_atacado(x, y) {}
     
-    method debo_retroceder(){
-        return false
-    }
+    method debo_retroceder() = false
 }
-

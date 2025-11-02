@@ -3,5 +3,3 @@ import tp.configurar_juego
 program juego {
     configurar_juego.jugar()
 }
-
-

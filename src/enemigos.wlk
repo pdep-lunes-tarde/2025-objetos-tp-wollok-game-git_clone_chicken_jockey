@@ -4,14 +4,13 @@ import tp.configurar_juego
 
 class Ogro {
     var property position = game.center()
-    var  property vida
+    var property vida
     var property ultima_posicion = game.center()
     var property danio = 1
     var property texto_vida = new Vida_enemigos(enemigo = self)
     const lentitud = 0
     var property clock_movimientos = 0
 
-    
     method image() = "Orco_16.png"
 
     method derecha() {
@@ -62,24 +61,17 @@ class Ogro {
     method chocaste_con_pj() {
         pj.fuiste_atacado(self)
         self.retrocede(self)
-
     }
 
     method mover_hacia(target) {
-        if(clock_movimientos == lentitud){
-            if (self.position().x() < target.position().x()) {
-                self.derecha()
-            } else if (self.position().x() > target.position().x()) {
-                self.izquierda()
-            } else if (self.position().y() > target.position().y()) {
-                self.abajo()
-            } else if (self.position().y() < target.position().y()) {
-                self.arriba()
-            } 
+        if (clock_movimientos == lentitud) {
+            if (self.position().x() < target.position().x()) self.derecha()
+            else if (self.position().x() > target.position().x()) self.izquierda()
+            else if (self.position().y() > target.position().y()) self.abajo()
+            else if (self.position().y() < target.position().y()) self.arriba()
+
             clock_movimientos = 0
-            }else{
-                clock_movimientos += 1
-            }
+        } else clock_movimientos += 1
     }
 
     method fuiste_atacado(enemigo, nueva_posicion) {
@@ -88,19 +80,17 @@ class Ogro {
             game.removeVisual(self)
             game.removeVisual(texto_vida)
             pj.mataste_un_ogro()
-        } else self.retrocede(self)
+        }
+        
+        self.retrocede(self)
     }
 
     method retrocede(otro) {
-        if(otro.debo_retroceder()) {
+        if (otro.debo_retroceder()) {
             position = ultima_posicion
             texto_vida.mover_con_enemigo()
         }
-
     }
 
-    method debo_retroceder() {
-        return vida > 0
-    }
-
+    method debo_retroceder() = vida > 0
 }

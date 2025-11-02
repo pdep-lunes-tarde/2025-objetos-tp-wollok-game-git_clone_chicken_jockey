@@ -7,12 +7,13 @@ class Objeto {
 
 class Pocion_vida inherits Objeto {
     var property position = game.center()
-    
+
     method image() = "Pocion.png"
 
     method aparecer() {
         const x = 0.randomUpTo(game.width()).truncate(0)
         const y = 0.randomUpTo(game.height()).truncate(0)
+
         position = game.at(x, y)
 
         game.addVisual(self)
@@ -23,9 +24,7 @@ class Pocion_vida inherits Objeto {
         game.removeVisual(self)
     }
 
-    method debo_retroceder() {
-        return false
-    }
+    method debo_retroceder() = false
 }
 
 class Moneda inherits Objeto {
@@ -36,6 +35,7 @@ class Moneda inherits Objeto {
     method aparecer() {
         const x = 0.randomUpTo(game.width()).truncate(0)
         const y = 0.randomUpTo(game.height()).truncate(0)
+
         position = game.at(x,y)
 
         game.addVisual(self)
@@ -46,9 +46,7 @@ class Moneda inherits Objeto {
         game.removeVisual(self)
     }
 
-    method debo_retroceder() {
-        return false
-    }
+    method debo_retroceder() = false
 }
 
 class Cofre inherits Objeto {
@@ -64,6 +62,7 @@ class Cofre inherits Objeto {
         if (self.puede_aparecer()) {
             const x = self.generar_ratio(2, pj.position().x()).anyOne()
             const y = self.generar_ratio(2, pj.position().y()).anyOne()
+
             position = game.at(x, y)
 
             game.addVisual(self)
@@ -81,29 +80,24 @@ class Cofre inherits Objeto {
     }
 
     method chocaste_con_pj() {
+        const objetos_aleatorios = self.generar_objetos_aleatorios()
+
         pj.nivel(pj.nivel() + 1)
         pj.cofres().clear()
         game.clear()
         game.removeVisual(self)
         pj.puntuacion_actual(0)
-        const objetos_aleatorios = self.generar_objetos_aleatorios()
-        configurar_juego.mostrar_menu_subida_nivel(objetos_aleatorios)        
+
+        configurar_juego.mostrar_menu_subida_nivel(objetos_aleatorios)
     }
 
-    method generar_objeto_aleatorios(){
+    method generar_objeto_aleatorios() {
         const pos_objeto = 0.randomUpTo(lista_objetos.size() + 1).truncate(0)
 
-        if (pos_objeto == 0) {
-            return new Escudo()
-        } else if (pos_objeto == 1) {
-            return new Espada()
-        } else {
-            return new Botas()
-        }
-
+        return if (pos_objeto == 0) new Escudo() else if (pos_objeto == 1) new Espada() else new Botas()
     }
 
-    method generar_objetos_aleatorios(){
+    method generar_objetos_aleatorios() {
         const objeto1 = self.generar_objeto_aleatorios()
         const objeto2 = self.generar_objeto_aleatorios()
         const objeto3 = self.generar_objeto_aleatorios()
@@ -114,53 +108,41 @@ class Cofre inherits Objeto {
 
         return [objeto1, objeto2, objeto3]
     }
-    method debo_retroceder() {
-        return false
-    }
 
+    method debo_retroceder() = false
 }
 
 class Objeto_especial inherits Objeto {
     var property position = game.center()
     const image
 
-    method image() {
-        return image
-    }
+    method image() = image
 
     method aparecer() {
         game.addVisual(self)
     }
 
-    method efecto_unico(){     
-    }
+    method efecto_unico() {}
 
-    method efecto_por_movimiento(){     
-    }
+    method efecto_por_movimiento() {}
 
-    method debo_retroceder() {
-        return false
-    }
+    method debo_retroceder() = false
 }
 
-class Escudo inherits Objeto_especial ( image = "Shield.png") {
-
-    override method efecto_unico(){     
+class Escudo inherits Objeto_especial (image = "Shield.png") {
+    override method efecto_unico() {
         pj.dar_escudo()
     }
 }
 
-class Botas inherits Objeto_especial ( image = "Botas.png") {
-
-    override method efecto_unico(){     
+class Botas inherits Objeto_especial (image = "Botas.png") {
+    override method efecto_unico() {
         configurar_juego.sumar_lentitud_enemigos()
     }
 }
 
-class Espada inherits Objeto_especial ( image = "Sword.png") {
-
-    override method efecto_unico(){     
+class Espada inherits Objeto_especial (image = "Sword.png") {
+    override method efecto_unico() {
         pj.aumentar_danio()
     }
 }
-
