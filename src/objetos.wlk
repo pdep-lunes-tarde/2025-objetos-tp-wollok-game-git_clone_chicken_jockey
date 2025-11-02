@@ -1,7 +1,11 @@
 import src.tp.*
 import personaje.*
 
-class Pocion_vida {
+class Objeto {
+    method fuiste_atacado(enemigo, nueva_posicion) {}
+}
+
+class Pocion_vida inherits Objeto {
     var property position = game.center()
     
     method image() = "Pocion.png"
@@ -24,7 +28,7 @@ class Pocion_vida {
     }
 }
 
-class Moneda {
+class Moneda inherits Objeto {
     var property position = game.center()
     
     method image() = "coin_16.png"
@@ -47,7 +51,7 @@ class Moneda {
     }
 }
 
-class Cofre {
+class Cofre inherits Objeto {
     var property position = game.center()
     const lista_objetos = ["Escudo", "Espada", "Reloj"]
     const cantidad_cofres_max = 3
@@ -116,7 +120,7 @@ class Cofre {
 
 }
 
-class Objeto_especial {
+class Objeto_especial inherits Objeto {
     var property position = game.center()
     const image
 
