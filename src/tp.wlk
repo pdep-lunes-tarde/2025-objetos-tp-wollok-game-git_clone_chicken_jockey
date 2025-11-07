@@ -167,8 +167,10 @@ object configurar_juego {
                 const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
 
                 ogro.aparecer()
+
+                ogro.debo_mostrar_vida(false)
                 
-                keyboard.any().onPressDo { ogro.mover_hacia(pj) }
+                keyboard.any().onPressDo { ogro.mover_hacia(pj)}
 
                 clock_enemigos = 0
                 game.onCollideDo(ogro, { otro => ogro.retrocede(otro) })

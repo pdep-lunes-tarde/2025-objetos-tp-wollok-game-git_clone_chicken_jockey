@@ -10,6 +10,7 @@ class Ogro {
     var property texto_vida = new Vida_enemigos(enemigo = self)
     const lentitud = 0
     var property clock_movimientos = 0
+    var property debo_mostrar_vida = true
 
     method image() = "Orco_16.png"
 
@@ -72,17 +73,22 @@ class Ogro {
 
             clock_movimientos = 0
         } else clock_movimientos += 1
+
+        if(!debo_mostrar_vida && game.hasVisual(texto_vida)) game.removeVisual(texto_vida)// logica repetida???
+        else if (debo_mostrar_vida && !game.hasVisual(texto_vida)) game.addVisual(texto_vida)
     }
 
     method fuiste_atacado(enemigo, nueva_posicion) {
         vida -= enemigo.danio()
         if (vida <= 0) {
             game.removeVisual(self)
-            game.removeVisual(texto_vida)
+            debo_mostrar_vida = false
             pj.mataste_un_ogro()
+        }else{
+            debo_mostrar_vida = true
+            self.retrocede(self)
         }
         
-        self.retrocede(self)
     }
 
     method retrocede(otro) {
