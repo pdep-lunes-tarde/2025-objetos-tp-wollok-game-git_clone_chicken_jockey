@@ -58,6 +58,10 @@ object configurar_juego {
         game.addVisual(tiempo)
         barra_de_vida.corazones_vacios().forEach({ corazon_vacio => game.addVisual(corazon_vacio) })
         barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
+        
+        const moneda_inicial = new Moneda()
+        game.addVisual(moneda_inicial)
+        moneda_inicial.movete_a_posicion_aleatoria()
     }
 
     method mostrar_menu() {
@@ -123,10 +127,8 @@ object configurar_juego {
     }
 
     method empezar_juego() {
-        const moneda = new Moneda()
 
         pj.centrate()
-        moneda.aparecer()
 
         self.agregar_visuales_iniciales()
 
@@ -166,7 +168,8 @@ object configurar_juego {
             if (clock_enemigos >= facilidad - pj.nivel() && cantidad_enemigos < cantidad_enemigos_max) {
                 const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
 
-                ogro.aparecer()
+                self.mostrar_ogro_y_vida(ogro)
+                ogro.movete_a_posicion_aleatoria()
 
                 ogro.debo_mostrar_vida(false)
                 
@@ -192,10 +195,12 @@ object configurar_juego {
 
         if (numero_aleatorio < probabilidad_corazon) {
             const pocion_vida = new Pocion_vida()
-            pocion_vida.aparecer()
+            game.addVisual(pocion_vida)
+            pocion_vida.movete_a_posicion_aleatoria()
         } else {
             const moneda = new Moneda()
-            moneda.aparecer()
+            game.addVisual(moneda)
+            moneda.movete_a_posicion_aleatoria()
         }
     }
 
@@ -232,5 +237,10 @@ object configurar_juego {
            self.empezar_juego()
            pj.agregar_objeto_especial(objetos_aleatorios.get(2))
         }
+    }
+
+    method mostrar_ogro_y_vida(ogro){
+        game.addVisual(ogro)
+        game.addVisual(ogro.texto_vida())
     }
 }

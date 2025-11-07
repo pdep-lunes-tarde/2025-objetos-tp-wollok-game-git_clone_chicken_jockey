@@ -10,13 +10,11 @@ class Pocion_vida inherits Objeto {
 
     method image() = "Pocion.png"
 
-    method aparecer() {
+    method movete_a_posicion_aleatoria() {
         const x = 0.randomUpTo(game.width()).truncate(0)
         const y = 0.randomUpTo(game.height()).truncate(0)
 
         position = game.at(x, y)
-
-        game.addVisual(self)
     }
 
     method chocaste_con_pj() {
@@ -32,13 +30,11 @@ class Moneda inherits Objeto {
     
     method image() = "coin_16.png"
 
-    method aparecer() {
+    method movete_a_posicion_aleatoria() {
         const x = 0.randomUpTo(game.width()).truncate(0)
         const y = 0.randomUpTo(game.height()).truncate(0)
 
         position = game.at(x,y)
-
-        game.addVisual(self)
     }
 
     method chocaste_con_pj() {

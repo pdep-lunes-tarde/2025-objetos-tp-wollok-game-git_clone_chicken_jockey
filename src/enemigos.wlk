@@ -28,8 +28,7 @@ class Ogro {
 
     method aparecer() {
         self.movete_a_posicion_aleatoria()
-        game.addVisual(self)
-        game.addVisual(texto_vida)
+        configurar_juego.mostrar_ogro_y_vida(self)
     }
 
     method abajo() {
