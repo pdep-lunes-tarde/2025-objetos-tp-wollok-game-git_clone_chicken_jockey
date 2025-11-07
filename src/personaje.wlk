@@ -140,8 +140,7 @@ object pj {
 
     method subir_nivel() {
         const cofre = new Cofre()
-
-        cofre.aparecer()
+        configurar_juego.aparecer_cofre(cofre)
         cofres.add(cofre)
     }
 
@@ -204,7 +203,7 @@ object pj {
 
         escudo.position(new Position(x = configurar_juego.ancho() - 5 + escudos.size(), y = configurar_juego.alto() - 1))
         escudos.add(escudo)
-        game.addVisual(escudo)
+        configurar_juego.mostrar_objeto(escudo)
     }
 
     method eliminar_escudo() {
@@ -255,7 +254,7 @@ object barra_de_vida {
 
     method sumar_vida() {      
         const nuevo_corazon = new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 2 - corazones.size(), y = configurar_juego.alto() - 1))
-        game.addVisual(nuevo_corazon)
+        configurar_juego.mostrar_objeto(nuevo_corazon)
         corazones.add(nuevo_corazon)
     }
 

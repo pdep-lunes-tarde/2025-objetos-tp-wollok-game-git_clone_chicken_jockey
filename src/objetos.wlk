@@ -54,14 +54,12 @@ class Cofre inherits Objeto {
     
     method image() = "chest.png"
 
-    method aparecer() {
+    method movete_al_radio_del_pj() {
         if (self.puede_aparecer()) {
             const x = self.generar_ratio(2, pj.position().x()).anyOne()
             const y = self.generar_ratio(2, pj.position().y()).anyOne()
 
             position = game.at(x, y)
-
-            game.addVisual(self)
         }
     }
 
@@ -113,10 +111,6 @@ class Objeto_especial inherits Objeto {
     const image
 
     method image() = image
-
-    method aparecer() {
-        game.addVisual(self)
-    }
 
     method efecto_unico() {}
 
