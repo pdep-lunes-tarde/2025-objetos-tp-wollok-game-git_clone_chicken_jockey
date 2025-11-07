@@ -27,7 +27,7 @@ class Ogro {
     }
 
     method aparecer() {
-        self.movete()
+        self.movete_a_posicion_aleatoria()
         game.addVisual(self)
         game.addVisual(texto_vida)
     }
@@ -49,7 +49,7 @@ class Ogro {
         position = position.right(9)
     }
 
-    method movete() {
+    method movete_a_posicion_aleatoria() {
         const x = 0.randomUpTo(game.width()).truncate(0)
         const y = 0.randomUpTo(game.height() - 2).truncate(0)
         position = game.at(x, y)
