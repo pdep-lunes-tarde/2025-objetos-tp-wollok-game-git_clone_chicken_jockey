@@ -259,19 +259,35 @@ object izquierda {
     method siguientePosicion(posicion) {
         return posicion.left(1)
     }
+
+    method nombre() {
+        return "izquierda"
+    }
 }
 object abajo {
     method siguientePosicion(posicion) {
         return posicion.down(1)
+    }
+
+    method nombre() {
+        return "abajo"
     }
 }
 object arriba {
     method siguientePosicion(posicion) {
         return posicion.up(1)
     }
+
+    method nombre() {
+        return "arriba"
+    }
 }
 object derecha {
     method siguientePosicion(posicion) {
         return posicion.right(1)
+    }
+
+    method nombre() {
+        return "derecha"
     }
 }

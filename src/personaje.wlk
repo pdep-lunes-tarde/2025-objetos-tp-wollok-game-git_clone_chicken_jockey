@@ -51,10 +51,9 @@ object pj {
         game.schedule(0, { image = "Soldado_ataque_0.png" })
 
         if (direccion != null) {
-            const pos = if (direccion == "derecha") position.right(1) else if (direccion == "izquierda") position.left(1) else if (direccion == "arriba") position.up(1) else position.down(1)
-
-            const imagen0 = "Soldado_efecto_ataque_" + direccion + "_0.png"
-            const imagen1 = "Soldado_efecto_ataque_" + direccion + "_1.png"
+            const pos = direccion.siguientePosicion(position)
+            const imagen0 = "Soldado_efecto_ataque_" + direccion.nombre() + "_0.png"
+            const imagen1 = "Soldado_efecto_ataque_" + direccion.nombre() + "_1.png"
 
             game.schedule(duracion_frame, {
                 const efecto0 = new Imagen_efecto_ataque(position = pos, image = imagen0)
@@ -85,7 +84,7 @@ object pj {
         if(!lista_enemigo.isEmpty())
             lista_enemigo.first().fuiste_atacado(self, direccion.siguientePosicion(poscicion_a_atacar))
         if (!atacando)
-            self.animacion_ataque("abajo")
+            self.animacion_ataque(direccion)
     }
     
     method sumar_puntuacion(puntos_a_sumar) {
@@ -104,8 +103,6 @@ object pj {
         configurar_juego.aparecer_cofre(cofre)
         cofres.add(cofre)
     }
-
-    method posiciones_alrededor() = [position.up(1), position.down(1), position.left(1), position.right(1)]
 
     method mataste_un_ogro() {
         configurar_juego.agregar_objeto_aleatorio()
@@ -132,7 +129,6 @@ object pj {
         const duracion_total = 1000
         const duracion_frame = duracion_total.div(3)
         
-        // Frame 0
         game.schedule(duracion_frame, { image = "Soldado_muerte_0.png" })
         game.schedule(duracion_frame * 2, { image = "Soldado_muerte_1.png" })
         game.schedule(duracion_frame * 3, { image = "Soldado_muerte_2.png" })

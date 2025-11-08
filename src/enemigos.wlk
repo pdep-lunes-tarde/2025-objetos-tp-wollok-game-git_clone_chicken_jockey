@@ -1,6 +1,6 @@
 import personaje.pj
 import textos.Vida_enemigos
-import tp.configurar_juego
+import tp.*
 
 class Ogro {
     var property position = game.center()
@@ -14,33 +14,19 @@ class Ogro {
 
     method image() = "Orco_16.png"
 
-    method derecha() {
-        ultima_posicion = position
-        position = position.right(1)
-        texto_vida.mover_con_enemigo()
-    }
+    method movete_a(nueva_direccion){
+        const posicion_candidata = nueva_direccion.siguientePosicion(position)
 
-    method izquierda() {
         ultima_posicion = position
-        position = position.left(1)
+        position = posicion_candidata
+
         texto_vida.mover_con_enemigo()
+
     }
 
     method aparecer() {
         self.movete_a_posicion_aleatoria()
         configurar_juego.mostrar_ogro_y_vida(self)
-    }
-
-    method abajo() {
-        ultima_posicion = position
-        position = position.down(1)
-        texto_vida.mover_con_enemigo()
-    }
-
-    method arriba() {
-        ultima_posicion = position
-        position = position.up(1)
-        texto_vida.mover_con_enemigo()
     }
 
     method posicion_menu() { 
@@ -65,16 +51,21 @@ class Ogro {
 
     method mover_hacia(target) {
         if (clock_movimientos == lentitud) {
-            if (self.position().x() < target.position().x()) self.derecha()
-            else if (self.position().x() > target.position().x()) self.izquierda()
-            else if (self.position().y() > target.position().y()) self.abajo()
-            else if (self.position().y() < target.position().y()) self.arriba()
+            const direccion_a_moverse = self.determinar_movimiento_hacia(target)
+            self.movete_a(direccion_a_moverse)
 
             clock_movimientos = 0
         } else clock_movimientos += 1
 
         if(!debo_mostrar_vida && game.hasVisual(texto_vida)) game.removeVisual(texto_vida)// logica repetida???
         else if (debo_mostrar_vida && !game.hasVisual(texto_vida)) game.addVisual(texto_vida)
+    }
+
+    method determinar_movimiento_hacia(target) {
+        if (self.position().x() < target.position().x()) return derecha
+        else if (self.position().x() > target.position().x()) return izquierda
+        else if (self.position().y() > target.position().y()) return abajo
+        else return arriba
     }
 
     method fuiste_atacado(enemigo, nueva_posicion) {
