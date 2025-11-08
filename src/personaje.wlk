@@ -78,36 +78,14 @@ object pj {
         position = position.left(9)
     }
 
-    method atacar_arriba() {
-        const posiciones_a_atacar = self.posiciones_alrededor()
+    method atacar_a(direccion){
+        const poscicion_a_atacar = direccion.siguientePosicion(position)
 
-        game.getObjectsIn(posiciones_a_atacar.get(0)).forEach({ ogro => ogro.fuiste_atacado(self, ogro.position().up(1)) })
-        if (!atacando)
-            self.animacion_ataque("arriba")
-    }
-
-    method atacar_abajo() {
-        const posiciones_a_atacar = self.posiciones_alrededor()
-
-        game.getObjectsIn(posiciones_a_atacar.get(1)).forEach({ ogro => ogro.fuiste_atacado(self, ogro.position().down(1)) })
+        const lista_enemigo = game.getObjectsIn(poscicion_a_atacar)
+        if(!lista_enemigo.isEmpty())
+            lista_enemigo.first().fuiste_atacado(self, direccion.siguientePosicion(poscicion_a_atacar))
         if (!atacando)
             self.animacion_ataque("abajo")
-    }
-
-    method atacar_izquierda() {
-        const posiciones_a_atacar = self.posiciones_alrededor()
-
-        game.getObjectsIn(posiciones_a_atacar.get(2)).forEach({ ogro => ogro.fuiste_atacado(self, ogro.position().left(1)) })
-        if (!atacando)
-            self.animacion_ataque("izquierda")
-    }
-
-    method atacar_derecha() {
-        const posiciones_a_atacar = self.posiciones_alrededor()
-
-        game.getObjectsIn(posiciones_a_atacar.get(3)).forEach({ ogro => ogro.fuiste_atacado(self, ogro.position().right(1)) })
-        if (!atacando)
-            self.animacion_ataque("derecha")
     }
     
     method sumar_puntuacion(puntos_a_sumar) {
