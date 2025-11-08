@@ -10,8 +10,8 @@ object configurar_juego {
     var clock_enemigos = 0
     var facilidad = 6
     var lentitud_enemigos = 0
-    var cantidad_enemigos = 0
     const cantidad_enemigos_max = 10
+    const enemigos = []
 
     method configurar() {
         game.width(ancho)
@@ -47,7 +47,7 @@ object configurar_juego {
             clock_enemigos = 0
             self.mostrar_menu()
             lentitud_enemigos = 0
-            cantidad_enemigos = 0
+            enemigos.clear()
         }
     }
 
@@ -164,21 +164,20 @@ object configurar_juego {
         }
 
         keyboard.any().onPressDo {
-            if (clock_enemigos >= facilidad - pj.nivel() && cantidad_enemigos < cantidad_enemigos_max) {
+            if (clock_enemigos >= facilidad - pj.nivel() && enemigos.size() < cantidad_enemigos_max) {
+
                 const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
+                enemigos.add(ogro)
 
                 self.aparecer_objeto_en_posicion_aleatoria(ogro)
 
                 ogro.debo_mostrar_vida(false)
-                
-                keyboard.any().onPressDo { ogro.mover_hacia(pj)}
 
-                clock_enemigos = 0
                 game.onCollideDo(ogro, { otro => ogro.retrocede(otro) })
 
-                cantidad_enemigos += 1
+                clock_enemigos = 0
             }
-            
+            enemigos.forEach({ enemigo => enemigo.mover_hacia(pj) })
             clock_enemigos += 1
         }
 
@@ -204,13 +203,13 @@ object configurar_juego {
         lentitud_enemigos += 1
     }
 
-    method reducir_cantidad_enemigos() {
-        if (cantidad_enemigos > 0) cantidad_enemigos -= 1
+    method eliminar_enemigo(enemimgo) {
+        enemigos.remove(enemimgo)
     }
 
     method mostrar_menu_subida_nivel(objetos_aleatorios) {
         game.clear()
-        cantidad_enemigos = 0
+        enemigos.clear()
         objetos_aleatorios.forEach({ objeto => game.addVisual(objeto) })
 
         game.addVisual(texto_subida_de_nivel)

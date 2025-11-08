@@ -104,10 +104,10 @@ object pj {
         cofres.add(cofre)
     }
 
-    method mataste_un_ogro() {
+    method mataste_un_enemigo(enemigo) {
         configurar_juego.agregar_objeto_aleatorio()
         self.sumar_puntuacion(1)
-        configurar_juego.reducir_cantidad_enemigos()
+        configurar_juego.eliminar_enemigo(enemigo)
         enemigos_asesinados += 1
     }
 

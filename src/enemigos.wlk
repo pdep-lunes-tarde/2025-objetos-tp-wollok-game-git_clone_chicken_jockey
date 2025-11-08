@@ -72,8 +72,8 @@ class Ogro {
         vida -= enemigo.danio()
         if (vida <= 0) {
             game.removeVisual(self)
-            debo_mostrar_vida = false
-            pj.mataste_un_ogro()
+            game.removeVisual(texto_vida)
+            pj.mataste_un_enemigo(self)
         }else{
             debo_mostrar_vida = true
             self.retrocede(self)
