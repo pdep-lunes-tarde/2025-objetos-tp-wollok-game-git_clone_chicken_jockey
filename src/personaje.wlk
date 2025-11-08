@@ -19,40 +19,23 @@ object pj {
 
     var property image = "Soldado_idle.png"
 
-    method arriba() {
-        if (position.y() <= configurar_juego.alto() - 2 && (game.getObjectsIn(position.up(1)).isEmpty() || !game.getObjectsIn(position.up(1)).first().debo_retroceder())) { // el numero es para que se vea, varia segun el tamanio de las celdas
+    method movete_a(nueva_direccion){
+        const posicion_candidata = nueva_direccion.siguientePosicion(position)
+
+        if (self.es_movimiento_valido(posicion_candidata)) {
             ultima_posicion = position
-            position = position.up(1)
+            position = posicion_candidata
             objetos_especiales.forEach({ objeto => objeto.efecto_por_movimiento() })
         }
     }
 
-    method abajo() {
-        if (position.y() >= 0 && (game.getObjectsIn(position.down(1)).isEmpty() || !game.getObjectsIn(position.down(1)).first().debo_retroceder())) {
-            ultima_posicion = position
-            position = position.down(1)
-            objetos_especiales.forEach({ objeto => objeto.efecto_por_movimiento() })
-        }
-    }
+    method es_movimiento_valido(posicion_candidata) = (self.esta_en_rango_del_tablero(posicion_candidata)) &&
+                                                      (game.getObjectsIn(posicion_candidata).isEmpty() || !game.getObjectsIn(posicion_candidata).first().debo_retroceder()) 
 
-    method derecha() {
-        if (position.x() <= configurar_juego.ancho() - 2 && (game.getObjectsIn(position.right(1)).isEmpty() || !game.getObjectsIn(position.right(1)).first().debo_retroceder())) { // el numero es para que se vea, varia segun el tamanio de las celdas
-            ultima_posicion = position
-            position = position.right(1)
-            objetos_especiales.forEach({ objeto => objeto.efecto_por_movimiento() })
-        }
-    }
-
-    method izquierda() {
-        if (position.x() >= 0 && (game.getObjectsIn(position.left(1)).isEmpty() || !game.getObjectsIn(position.left(1)).first().debo_retroceder())){
-            ultima_posicion = position
-            position = position.left(1)
-            objetos_especiales.forEach({ objeto => objeto.efecto_por_movimiento() })
-        }
-    }
-
-    method es_movimiento_valido(nueva_posicion) = nueva_posicion.x() >= 0 && nueva_posicion.x() < configurar_juego.ancho() &&
-                                                  nueva_posicion.y() >= 0 && nueva_posicion.y() < configurar_juego.alto()
+    method esta_en_rango_del_tablero(posicion_candidata) =  (posicion_candidata.x() >= 0) &&
+                                                            (posicion_candidata.x() < configurar_juego.ancho()) &&
+                                                            (posicion_candidata.y() >= 0) &&
+                                                            (posicion_candidata.y() < configurar_juego.alto())
 
     method centrate() {
         position = game.center()
@@ -239,6 +222,7 @@ object pj {
         position = ultima_posicion
     }
 }
+
 object barra_de_vida {
     var property corazones = [new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 2, y = configurar_juego.alto() - 1)),
                               new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 3, y = configurar_juego.alto() - 1)),

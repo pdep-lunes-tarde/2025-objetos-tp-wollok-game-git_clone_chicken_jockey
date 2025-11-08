@@ -2,13 +2,13 @@ import src.tp.*
 import personaje.*
 
 class Objeto {
-    method fuiste_atacado(enemigo, nueva_posicion) {}
-}
-
-class Pocion_vida inherits Objeto {
     var property position = game.center()
 
-    method image() = "Pocion.png"
+    var property image 
+
+    method fuiste_atacado(enemigo, nueva_posicion) {}
+
+    method debo_retroceder() = false
 
     method movete_a_posicion_aleatoria() {
         const x = 0.randomUpTo(game.width()).truncate(0)
@@ -17,42 +17,32 @@ class Pocion_vida inherits Objeto {
         position = game.at(x, y)
     }
 
-    method chocaste_con_pj() {
+    method chocaste_con_pj() {}
+}
+
+class Pocion_vida inherits Objeto (image = "Pocion.png") {
+    
+    override method chocaste_con_pj() {
         pj.recibir_vida()
         game.removeVisual(self)
     }
-
-    method debo_retroceder() = false
 }
 
-class Moneda inherits Objeto {
-    var property position = game.center()
-    
-    method image() = "coin_16.png"
+class Moneda inherits Objeto (image = "coin_16.png") {
 
-    method movete_a_posicion_aleatoria() {
-        const x = 0.randomUpTo(game.width()).truncate(0)
-        const y = 0.randomUpTo(game.height()).truncate(0)
-
-        position = game.at(x,y)
-    }
-
-    method chocaste_con_pj() {
+    override method chocaste_con_pj() {
         pj.sumar_puntuacion(3)
         game.removeVisual(self)
     }
 
-    method debo_retroceder() = false
+
 }
 
-class Cofre inherits Objeto {
-    var property position = game.center()
+class Cofre inherits Objeto (image = "chest.png") {
     const lista_objetos = ["Escudo", "Espada", "Reloj"]
     const cantidad_cofres_max = 3
 
     method cantidad_cofres_max() = cantidad_cofres_max
-    
-    method image() = "chest.png"
 
     method movete_al_radio_del_pj() {
         if (self.puede_aparecer()) {
@@ -73,7 +63,7 @@ class Cofre inherits Objeto {
         return lista.map{ numero => coordenada + numero}
     }
 
-    method chocaste_con_pj() {
+    override method chocaste_con_pj() {
         const objetos_aleatorios = self.generar_objetos_aleatorios()
 
         pj.nivel(pj.nivel() + 1)
@@ -103,20 +93,35 @@ class Cofre inherits Objeto {
         return [objeto1, objeto2, objeto3]
     }
 
-    method debo_retroceder() = false
+}
+
+object izquierda {
+    method siguientePosicion(posicion) {
+        return posicion.left(1)
+    }
+}
+object abajo {
+    method siguientePosicion(posicion) {
+        return posicion.down(1)
+    }
+}
+object arriba {
+    method siguientePosicion(posicion) {
+        return posicion.up(1)
+    }
+}
+object derecha {
+    method siguientePosicion(posicion) {
+        return posicion.right(1)
+    }
 }
 
 class Objeto_especial inherits Objeto {
-    var property position = game.center()
-    const image
-
-    method image() = image
 
     method efecto_unico() {}
 
     method efecto_por_movimiento() {}
 
-    method debo_retroceder() = false
 }
 
 class Escudo inherits Objeto_especial (image = "Shield.png") {

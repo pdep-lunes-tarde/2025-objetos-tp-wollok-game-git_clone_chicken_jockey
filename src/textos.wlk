@@ -1,6 +1,20 @@
 import personaje.*
 import tp.configurar_juego
 
+
+class Texto{
+    method position() = game.center()
+
+    method text()
+
+    method textColor() = paleta.negro()
+
+    method debo_retroceder() = false
+
+    method chocaste_con_pj() {}
+
+}
+
 object puntuacion {
     method position() = new Position(x = 3, y = configurar_juego.alto() - 1)
 

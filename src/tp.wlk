@@ -132,7 +132,7 @@ object configurar_juego {
         self.agregar_visuales_iniciales()
 
         keyboard.right().onPressDo {
-            pj.derecha()
+            pj.movete_a(derecha)
         }
 
         keyboard.d().onPressDo {
@@ -140,7 +140,7 @@ object configurar_juego {
         }
 
         keyboard.left().onPressDo {
-            pj.izquierda()
+            pj.movete_a(izquierda)
         }
 
         keyboard.a().onPressDo {
@@ -148,7 +148,7 @@ object configurar_juego {
         }
 
         keyboard.up().onPressDo {
-            pj.arriba()
+            pj.movete_a(arriba)
         }
 
         keyboard.w().onPressDo {
@@ -156,7 +156,7 @@ object configurar_juego {
         }
 
         keyboard.down().onPressDo {
-            pj.abajo()
+            pj.movete_a(abajo)
         }
 
         keyboard.s().onPressDo {
@@ -168,7 +168,7 @@ object configurar_juego {
                 const ogro = new Ogro(vida = 3 + pj.nivel(), lentitud = lentitud_enemigos)
 
                 self.aparecer_objeto_en_posicion_aleatoria(ogro)
-
+                
                 ogro.debo_mostrar_vida(false)
                 
                 keyboard.any().onPressDo { ogro.mover_hacia(pj)}
