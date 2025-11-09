@@ -11,6 +11,7 @@ class Ogro {
     const lentitud = 0
     var property clock_movimientos = 0
     var property debo_mostrar_vida = true
+    var primer_movimiento = true
 
     method image() = "Orco_16.png"
 
@@ -60,6 +61,11 @@ class Ogro {
         if (debo_mostrar_vida != game.hasVisual(texto_vida)) {
             if (game.hasVisual(texto_vida)) game.removeVisual(texto_vida)
             else game.addVisual(texto_vida)
+        }
+
+        if(primer_movimiento) {
+            primer_movimiento = false
+            if (!debo_mostrar_vida) game.addVisual(texto_vida)
         }
     }
 
