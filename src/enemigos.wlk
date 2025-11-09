@@ -57,28 +57,28 @@ class Ogro {
             clock_movimientos = 0
         } else clock_movimientos += 1
 
-        if(!debo_mostrar_vida && game.hasVisual(texto_vida)) game.removeVisual(texto_vida)// logica repetida???
-        else if (debo_mostrar_vida && !game.hasVisual(texto_vida)) game.addVisual(texto_vida)
+        if (debo_mostrar_vida != game.hasVisual(texto_vida)) {
+            if (game.hasVisual(texto_vida)) game.removeVisual(texto_vida)
+            else game.addVisual(texto_vida)
+        }
     }
 
-    method determinar_movimiento_hacia(target) {
-        if (self.position().x() < target.position().x()) return derecha
-        else if (self.position().x() > target.position().x()) return izquierda
-        else if (self.position().y() > target.position().y()) return abajo
-        else return arriba
-    }
+    method determinar_movimiento_hacia(target) = if (self.position().x() < target.position().x()) derecha
+                                                 else if (self.position().x() > target.position().x()) izquierda
+                                                 else if (self.position().y() > target.position().y()) abajo
+                                                 else arriba
 
     method fuiste_atacado(enemigo, nueva_posicion) {
         vida -= enemigo.danio()
         if (vida <= 0) {
+            debo_mostrar_vida = false
             game.removeVisual(self)
             game.removeVisual(texto_vida)
             pj.mataste_un_enemigo(self)
-        }else{
+        } else {
             debo_mostrar_vida = true
             self.retrocede(self)
         }
-        
     }
 
     method retrocede(otro) {

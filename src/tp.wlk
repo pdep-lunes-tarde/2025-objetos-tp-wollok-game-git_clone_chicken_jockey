@@ -57,7 +57,7 @@ object configurar_juego {
         game.addVisual(nivel)
         game.addVisual(tiempo)
         barra_de_vida.corazones_vacios().forEach({ corazon_vacio => game.addVisual(corazon_vacio) })
-        barra_de_vida.corazones().forEach({corazon => game.addVisual(corazon)})
+        barra_de_vida.corazones().forEach({ corazon => game.addVisual(corazon) })
         
         const moneda_inicial = new Moneda()
         self.aparecer_objeto_en_posicion_aleatoria(moneda_inicial)
@@ -258,35 +258,19 @@ object izquierda {
     method siguientePosicion(posicion) {
         return posicion.left(1)
     }
-
-    method nombre() {
-        return "izquierda"
-    }
 }
 object abajo {
     method siguientePosicion(posicion) {
         return posicion.down(1)
-    }
-
-    method nombre() {
-        return "abajo"
     }
 }
 object arriba {
     method siguientePosicion(posicion) {
         return posicion.up(1)
     }
-
-    method nombre() {
-        return "arriba"
-    }
 }
 object derecha {
     method siguientePosicion(posicion) {
         return posicion.right(1)
-    }
-
-    method nombre() {
-        return "derecha"
     }
 }

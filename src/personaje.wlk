@@ -19,7 +19,7 @@ object pj {
 
     var property image = "Soldado_idle.png"
 
-    method movete_a(nueva_direccion){
+    method movete_a(nueva_direccion) {
         const posicion_candidata = nueva_direccion.siguientePosicion(position)
 
         if (self.es_movimiento_valido(posicion_candidata)) {
@@ -32,10 +32,10 @@ object pj {
     method es_movimiento_valido(posicion_candidata) = (self.esta_en_rango_del_tablero(posicion_candidata)) &&
                                                       (game.getObjectsIn(posicion_candidata).isEmpty() || !game.getObjectsIn(posicion_candidata).first().debo_retroceder()) 
 
-    method esta_en_rango_del_tablero(posicion_candidata) =  (posicion_candidata.x() >= 0) &&
-                                                            (posicion_candidata.x() < configurar_juego.ancho()) &&
-                                                            (posicion_candidata.y() >= 0) &&
-                                                            (posicion_candidata.y() < configurar_juego.alto())
+    method esta_en_rango_del_tablero(posicion_candidata) = (posicion_candidata.x() >= 0) &&
+                                                           (posicion_candidata.x() < configurar_juego.ancho()) &&
+                                                           (posicion_candidata.y() >= 0) &&
+                                                           (posicion_candidata.y() < configurar_juego.alto())
 
     method centrate() {
         position = game.center()
@@ -52,8 +52,8 @@ object pj {
 
         if (direccion != null) {
             const pos = direccion.siguientePosicion(position)
-            const imagen0 = "Soldado_efecto_ataque_" + direccion.nombre() + "_0.png"
-            const imagen1 = "Soldado_efecto_ataque_" + direccion.nombre() + "_1.png"
+            const imagen0 = "Soldado_efecto_ataque_" + direccion.toString() + "_0.png"
+            const imagen1 = "Soldado_efecto_ataque_" + direccion.toString() + "_1.png"
 
             game.schedule(duracion_frame, {
                 const efecto0 = new Imagen_efecto_ataque(position = pos, image = imagen0)
@@ -132,7 +132,7 @@ object pj {
         game.schedule(duracion_frame, { image = "Soldado_muerte_0.png" })
         game.schedule(duracion_frame * 2, { image = "Soldado_muerte_1.png" })
         game.schedule(duracion_frame * 3, { image = "Soldado_muerte_2.png" })
-        game.schedule(duracion_frame * 4, {configurar_juego.perdi()})     
+        game.schedule(duracion_frame * 4, { configurar_juego.perdi() })     
     }
 
     method animacion_fuiste_atacado() {

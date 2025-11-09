@@ -21,7 +21,6 @@ class Objeto {
 }
 
 class Pocion_vida inherits Objeto (image = "Pocion.png") {
-    
     override method chocaste_con_pj() {
         pj.recibir_vida()
         game.removeVisual(self)
@@ -29,7 +28,6 @@ class Pocion_vida inherits Objeto (image = "Pocion.png") {
 }
 
 class Moneda inherits Objeto (image = "coin_16.png") {
-
     override method chocaste_con_pj() {
         pj.sumar_puntuacion(3)
         game.removeVisual(self)
