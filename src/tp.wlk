@@ -17,6 +17,8 @@ object configurar_juego {
         game.width(ancho)
         game.height(alto)
         game.cellSize(16)
+        game.boardGround("background.jpg")
+        paleta.agregar()
     }
 
     method jugar() {

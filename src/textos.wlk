@@ -1,30 +1,39 @@
 import personaje.*
 import tp.configurar_juego
 
-
-class Texto{
+class Texto {
     method position() = game.center()
 
     method text()
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 
     method debo_retroceder() = false
 
     method chocaste_con_pj() {}
+}
 
+
+object paleta {
+    const colores = new Dictionary()
+
+    method colores() = colores
+
+    method agregar() {
+        colores.put("blanco", "FFEFF4")
+        colores.put("azul", "475EBE")
+        colores.put("negro", "000000")
+    }
+
+    method color(color) = self.colores().get(color)
 }
 
 object puntuacion {
     method position() = new Position(x = 3, y = configurar_juego.alto() - 1)
 
-    method text() = "Puntuacion: " + pj.puntuacion_actual()
+    method text() = "Puntuación: " + pj.puntuacion_actual()
 
-    method textColor() = paleta.negro()
-}
-
-object paleta {
-    var property negro = "000000"
+    method textColor() = paleta.color("negro")
 }
 
 object nivel {
@@ -32,7 +41,7 @@ object nivel {
 
     method text() = "Nivel: " + pj.nivel()
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object vida {
@@ -40,7 +49,7 @@ object vida {
 
     method text() = "Vida: " + pj.vida()
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object game_over {
@@ -48,7 +57,7 @@ object game_over {
 
     method text() = "GAME OVER\nPRESIONA 'R' PARA REINICIAR"
 
-    method textColor() = paleta.negro() 
+    method textColor() = paleta.color("negro")
 }
 
 object you_win {
@@ -56,7 +65,7 @@ object you_win {
 
     method text() = "YOU WIN\n\nPRESIONA 'R' PARA REINICIAR"
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object tiempo {
@@ -66,7 +75,7 @@ object tiempo {
 
     method text() = "Tiempo: " + tiempo
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 
     method aumentarTiempo() {
         tiempo += 1
@@ -82,15 +91,15 @@ object controles {
 
     method text() = "Movimiento: Flechas\nAtaque: WASD"
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object texto_menu {
     method position() = game.center()
 
-    method text() = "Empezar juego: 'ENTER'\nControles: 'C'\nFacilidad: 'F'"
+    method text() = "Empezar juego: 'ENTER'\n\nControles: 'C'\n\nFacilidad: 'F'"
 
-    method textColor() = paleta.negro() 
+    method textColor() = paleta.color("negro")
 }
 
 object volver_atras {
@@ -98,7 +107,7 @@ object volver_atras {
 
     method text() = "Back: 'B'"
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object texto_estadisticas {
@@ -106,31 +115,31 @@ object texto_estadisticas {
 
     method text() = "Enemigos asesinados: " + pj.enemigos_asesinados() + "\nNivel alcanzado: " + pj.nivel() + "\nTiempo sobrevivido: " + tiempo.tiempo() + "\n\nPuntuacion final: " + pj.puntuacion_total()
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object texto_facilidad {
     method position() = game.center()
 
-    method text() = "Facil: 'F'\nMedia: 'M'\nDificil: 'D'"
+    method text() = "Fácil: 'F'\nMedia: 'M'\nDifícil: 'D'"
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object texto_subida_de_nivel {
     method position() = game.center().up(5)
 
-    method text() = "SUBISTE DE NIVEL!\n\nElegi un objeto..."
+    method text() = "SUBISTE DE NIVEL!\n\nElegí un objeto..."
 
-    method textColor() = paleta.negro() 
+    method textColor() = paleta.color("negro")
 }
 
 object text_seleccion_objetos {
     method position() = game.center().left(4)
 
-    method text() = "Presiona '0' para ->\n\nPresiona '1' para ->\n\nPresiona '2' para ->"
+    method text() = "Presiona '0' para -> \n\nPresiona '1' para -> \n\nPresiona '2' para -> "
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 }
 
 object marcador_facilidad {
@@ -138,9 +147,9 @@ object marcador_facilidad {
     const posicion_inicial = game.center().left(6).down(2)
     var property position = posicion_inicial.up(facilidad / 2)
 
-    method text() = "Seleccionada -->"
+    method text() = "Seleccionada --> "
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 
     method actualizar(nueva_facilidad) {
         self.facilidad(nueva_facilidad / 2)
@@ -166,7 +175,7 @@ class Vida_enemigos {
 
     method text() = "Vida: " + enemigo.vida()
 
-    method textColor() = paleta.negro()
+    method textColor() = paleta.color("negro")
 
     method mover_con_enemigo() {
         position = enemigo.position().up(1)
