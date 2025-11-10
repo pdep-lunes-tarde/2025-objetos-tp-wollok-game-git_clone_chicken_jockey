@@ -1,3 +1,4 @@
+import src.imagenes.Vida_enemigos
 import personaje.pj
 import tp.*
 import textos.*

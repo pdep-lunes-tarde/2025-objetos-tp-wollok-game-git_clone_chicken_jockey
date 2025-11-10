@@ -1,6 +1,7 @@
 import textos.*
 import tp.configurar_juego
 import objetos.*
+import imagenes.*
 
 object pj {
     var property position = game.center()

@@ -3,6 +3,7 @@ import personaje.*
 import textos.*
 import enemigos.*
 import objetos.*
+import imagenes.*
 
 object configurar_juego {
     var property ancho = 30
