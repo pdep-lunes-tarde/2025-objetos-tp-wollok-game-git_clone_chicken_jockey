@@ -198,28 +198,26 @@ object pj {
 }
 
 object barra_de_vida {
-    var property corazones = [new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 2, y = configurar_juego.alto() - 1)),
-                              new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 3, y = configurar_juego.alto() - 1)),
-                              new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 4, y = configurar_juego.alto() - 1))]
-    var property corazones_vacios = [new Imagen_corazon_vacio (position = new Position(x = configurar_juego.ancho() - 2, y = configurar_juego.alto() - 1)),
-                                     new Imagen_corazon_vacio (position = new Position(x = configurar_juego.ancho() - 3, y = configurar_juego.alto() - 1)),
-                                     new Imagen_corazon_vacio (position = new Position(x = configurar_juego.ancho() - 4, y = configurar_juego.alto() - 1))]
+    var property corazones = self.generar_lista_de_corazones(lleno)
+    var property corazones_vacios = self.generar_lista_de_corazones(vacio)
 
     method restar_vida() {
         game.removeVisual(corazones.last())
         corazones.remove(corazones.last())
     }
 
+    method posicion_corazon_inicial() = new Position(x = configurar_juego.ancho() - 2, y = configurar_juego.alto() - 1)
+
+    method generar_lista_de_corazones(estado) = (0..2).map{ desplazamiento => new Imagen_corazon(position = self.posicion_corazon_inicial().left(desplazamiento), estado = estado)}
+
     method sumar_vida() {      
-        const nuevo_corazon = new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 2 - corazones.size(), y = configurar_juego.alto() - 1))
+        const nuevo_corazon = new Imagen_corazon (position = self.posicion_corazon_inicial().left(corazones.size()))
         configurar_juego.mostrar_objeto(nuevo_corazon)
         corazones.add(nuevo_corazon)
     }
 
     method reiniciate() {
-        corazones = [new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 2, y = configurar_juego.alto() - 1)),
-                     new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 3, y = configurar_juego.alto() - 1)),
-                     new Imagen_corazon (position = new Position(x = configurar_juego.ancho() - 4, y = configurar_juego.alto() - 1))]
+        corazones = self.generar_lista_de_corazones(lleno)
     }
 }
 

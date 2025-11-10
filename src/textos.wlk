@@ -153,12 +153,23 @@ object logo {
 class Imagen_corazon {
     var property position
 
-    method image() = "Corazon_16.png"
+    var estado = lleno
+
+    method image() = estado.image()
+
+    method mover_izquierda(cantidad){
+        position = position.left(cantidad)
+    }
+
+    method estado(nuevo_estado) {
+        estado = nuevo_estado
+    }
 }
 
-class Imagen_corazon_vacio {
-    var property position
-
+object lleno{
+    method image() = "Corazon_16.png"
+}
+object vacio{
     method image() = "Corazon_vacio_16.png"
 }
 class Vida_enemigos {
