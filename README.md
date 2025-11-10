@@ -1,8 +1,12 @@
 # Grupo
 
-Nombre: **COMPLETAR ACA**
+Nombre: **git_clone_chicken_jockey**
 
-Integrantes: **COMPLETAR ACA**
+Integrantes
+- Francisco Der Ghougassian
+- Facundo Harche
+- Thiago Piccoli
+- Emanuel Prima
 
 # Consigna TP Integrador
 
@@ -40,8 +44,16 @@ De esa entrega vamos a ayudarles a decidir que agregar para la siguiente entrega
 
 En esta entrega se evaluará el uso de objetos en el tp. Debe haber presente al menos una persona del grupo ese día para la corrección, caso contrario se considera no entregado.
 
-# Juego: NOMBRE
+# Juego: Dungeon Hunter
 
-DESCRIPCION
+![logo](logo.png)
 
-CONTROLES
+En este juego, uno es un personajito que se encuentra en una mazmorra donde tiene el objetivo de encontrar la mayor cantidad de tesoros posibles a cada paso que da. 
+Sin embargo, no está solo, y cada tanto aparecen un enemigos que vienen a eliminarlo. Consigue la mayor cantidad oro posible antes de que los mosntruos te atrapen!
+
+Controles del aventurero:
+  Flechas: moverse de manera convencional.
+  WASD: para atacar en multiples direcciones
+  Spawn y movimiento de los enemigos/items:
+  Lo ideal sería que por cada interacción que el usuario haga, los enemigos avancen. Cada cierta cantidad de interacciones, aparece un enemigo.
+  Lo mismo con los tesoros, cada 5 pasos, que aparezca una moneda o un tesoro más grande.
