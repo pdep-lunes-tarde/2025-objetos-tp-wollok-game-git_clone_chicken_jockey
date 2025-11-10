@@ -1,6 +1,7 @@
 import personaje.pj
-import textos.Vida_enemigos
 import tp.*
+import textos.*
+import colores.*
 
 class Ogro {
     var property position = game.center()
@@ -76,6 +77,10 @@ class Ogro {
 
     method fuiste_atacado(enemigo, nueva_posicion) {
         vida -= enemigo.danio()
+
+        game.schedule(0, { texto_vida.color(rojo.color()) })
+        game.schedule(250, { texto_vida.color(negro.color()) })
+        
         if (vida <= 0) {
             debo_mostrar_vida = false
             game.removeVisual(self)
