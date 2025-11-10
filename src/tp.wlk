@@ -67,6 +67,7 @@ object configurar_juego {
     method mostrar_menu() {
         const ogro = new Ogro(vida = 3)
 
+        game.addVisual(logo)
         game.addVisual(texto_menu)
         pj.posicion_menu()
         game.addVisual(pj)

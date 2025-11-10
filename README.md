@@ -46,6 +46,8 @@ En esta entrega se evaluará el uso de objetos en el tp. Debe haber presente al 
 
 # Juego: Dungeon Hunter
 
+![logo](logo.png)
+
 En este juego, uno es un personajito que se encuentra en una mazmorra donde tiene el objetivo de encontrar la mayor cantidad de tesoros posibles a cada paso que da. 
 Sin embargo, no está solo, y cada tanto aparecen un enemigos que vienen a eliminarlo. Consigue la mayor cantidad oro posible antes de que los mosntruos te atrapen!
 

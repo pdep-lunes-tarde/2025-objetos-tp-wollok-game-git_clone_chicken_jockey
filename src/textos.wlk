@@ -81,7 +81,7 @@ object controles {
 }
 
 object texto_menu {
-    method position() = game.center()
+    method position() = game.center().down(4)
 
     method text() = "Empezar juego: 'ENTER'\n\nControles: 'C'\n\nFacilidad: 'F'"
 
@@ -142,6 +142,12 @@ object marcador_facilidad {
         position = posicion_inicial
         position = self.position().up(facilidad)
     }
+}
+
+object logo {
+    var property position = game.center().left(7).up(1)
+
+    method image() = "logo_chico.png"
 }
 
 class Imagen_corazon {
